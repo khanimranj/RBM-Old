@@ -1,0 +1,135 @@
+{% extends "brand-layout.html" %}
+{% block content %}
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">Manage Templates /</span> Template Details</h4>
+<div class="row">
+    <div class="col-md-6 col-lg-6 mb-6">
+        <div class="card">
+            <div class="card-body">
+                <div class="template-div info-template">
+                    <p><strong class="template-header">ID:</strong> {{ template.template_id }}</p>
+                    <p><strong>Content:</strong> {{ template.content }}</p>
+                    <p><strong>Created Date:</strong> {{ template.created_date }}</p>
+                    <p><strong>Type:</strong> {{ template.template_type }}</p>
+                    <p><strong>Submitted By:</strong> {{ template.submitted_by }}</p>
+                    <p><strong>Approved By:</strong> {{ template.approved_by }}</p>
+                    <p><strong>Approved Date:</strong> {{ template.approved_date }}</p>
+                    <p><strong>Status:</strong> {{ template.status }}</p>
+                    <p><strong>Template ID:</strong> {{ template.TemplateID }}</p>
+                    <p><strong>Internal ID:</strong> {{ template.Internal_ID }}</p>
+                </div>
+                <div class="template-div instructions-template">
+                    <p><strong class="template-header">How to use this template</strong></p>
+                    <p class="template-instruction-text">
+                        To send a message using http post use the following JSON:
+                    </p>
+                    <pre>{{m1}}</pre>
+                    <p class="template-instruction-text">
+                        Replace 'msisdnfield' with the 12-digit mobile number, for example: to send to mobile number 919980113546
+                    </p>
+                    <pre>{{m2}}</pre>
+                    <strong class="template-message">{{m3}}</strong>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-6 mb-6">
+        <div class="smartphone">
+            {% if template.template_type == "text" %}
+                <div class="preview">
+                    <div class="content">
+                        <div class="text">{{ content.agentContentMessage.text  }}</div>
+                        <div class="suggestions">
+                            {% for suggestion in content.agentContentMessage.suggestions %}
+                                <a href="javascript: void(0)">
+                                    {% if "action" in suggestion and "openUrlAction" in suggestion.action %}
+                                        <i class="bx bx-link"></i> {{ suggestion['action']['text'] }}
+                                    {% endif %}
+                                    {% if "action" in suggestion and "dialAction" in suggestion.action %}
+                                        <i class="bx bx-phone"></i> {{ suggestion['action']['text'] }}
+                                    {% endif %}
+                                    {% if "reply" in suggestion %}
+                                        <i class="bx bx-reply"></i> {{ suggestion['reply']['text'] }}
+                                    {% endif %}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if template.template_type == "rich" %}
+                <div class="preview {{ content.agentContentMessage.richCard.standaloneCard.cardOrientation  }} {{ content.agentContentMessage.richCard.standaloneCard.thumbnailImageAlignment  }}">
+                    <div class="image {{ content.agentContentMessage.richCard.standaloneCard.cardContent.media.height  }}">
+                        <img src="{{ content.agentContentMessage.richCard.standaloneCard.cardContent.media.contentInfo.fileUrl  }}"/>
+                    </div>
+                    <div class="content">
+                        <div class="title">{{ content.agentContentMessage.richCard.standaloneCard.cardContent.title  }}</div>
+                        <div class="description">{{ content.agentContentMessage.richCard.standaloneCard.cardContent.description  }}</div>
+                        <div class="suggestions">
+                            {% for suggestion in content.agentContentMessage.richCard.standaloneCard.cardContent.suggestions %}
+                                <a href="javascript: void(0)">
+                                    {% if "action" in suggestion and "openUrlAction" in suggestion.action %}
+                                        <i class="bx bx-link"></i> {{ suggestion['action']['text'] }}
+                                    {% endif %}
+                                    {% if "action" in suggestion and "dialAction" in suggestion.action %}
+                                        <i class="bx bx-phone"></i> {{ suggestion['action']['text'] }}
+                                    {% endif %}
+                                    {% if "reply" in suggestion %}
+                                        <i class="bx bx-reply"></i> {{ suggestion['reply']['text'] }}
+                                    {% endif %}
+                                </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% if template.template_type == "richCarousel" %}
+                <div id="richCardCarousel" class="carousel slide carousel-dark ">
+                    <div class="carousel-inner {{content.agentContentMessage.richCard.carouselCard.cardWidth}}">
+                        {% for card in content.agentContentMessage.richCard.carouselCard.cardContents %}
+                        <div class="carousel-item"> 
+                            <div class="preview rich-carousel">
+                                <div class="image {{ card.media.height  }}">
+                                    <img src="{{ card.media.contentInfo.fileUrl  }}"/>
+                                </div>
+                                <div class="content">
+                                    <div class="description">{{ card.title  }}</div>
+                                    <div class="suggestions">
+                                        {% for suggestion in card.suggestions %}
+                                            <a href="javascript: void(0)">
+                                                {% if "action" in suggestion and "openUrlAction" in suggestion.action %}
+                                                    <i class="bx bx-link"></i> {{ suggestion['action']['text'] }}
+                                                {% endif %}
+                                                {% if "action" in suggestion and "dialAction" in suggestion.action %}
+                                                    <i class="bx bx-phone"></i> {{ suggestion['action']['text'] }}
+                                                {% endif %}
+                                                {% if "reply" in suggestion %}
+                                                    <i class="bx bx-reply"></i> {{ suggestion['reply']['text'] }}
+                                                {% endif %}
+                                            </a>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                        <a class="carousel-control-prev" href="#richCardCarousel" role="button" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#richCardCarousel" role="button" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        </a>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script src="../static/js/libs/jquery/jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.carousel').carousel({ interval: 1000, cycle: true });
+        $('.carousel-item').first().addClass('active');
+    });
+</script>
+{% endblock %}

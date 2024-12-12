@@ -1,0 +1,60 @@
+{% extends "static-layout.html" %}
+{% block content %}
+<div class="container-xxl">
+  <div class="authentication-wrapper authentication-basic container-p-y">
+    <div class="authentication-inner">
+      <div class="card">
+        <div class="card-body">
+          <p class="mb-4">A few more steps to go...</p>
+          <h4 class="mb-2">Verify Mobile Number</h4>
+          <p class="mb-4">Please enter the OTP sent to verify your mobile number.</p>
+          <p class="mb-4"><a href="/mobile-number-verification">Change mobile number</a></p>
+          <form id="mobile-otp-verification-form" action="" method="post">
+            <div class="row">
+              <div class="otp-field mb-4">
+                <input name="otp" type="number" />
+                <input name="otp" type="number"  />
+                <input name="otp" type="number"  />
+                <input name="otp" type="number"  />
+              </div>
+              <p class="otp-validate"></p>
+              <div class="mb-3">
+                <a class="btn btn-secondary" href="">Resend OTP</a>
+                <button type="submit" class="btn btn-primary">Submit OTP</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$.validator.setDefaults({
+  submitHandler: function() {
+    alert("form-submitted!");
+    window.open("./mobile-number-verification-success");
+  }
+});
+$().ready(function() {
+    $("#mobile-otp-verification-form").validate({
+			rules: {
+				otp: {
+					required: true
+				},
+			},
+			messages: {
+        otp: {
+					required: "Please provide OTP",
+				},
+			},
+      errorPlacement: function (error, element) {
+            var name = $(element).attr("name");
+            error.appendTo($("." + name + "-validate"));
+      },
+		});
+
+	});
+</script>
+
+{% endblock %}

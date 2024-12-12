@@ -1,0 +1,78 @@
+{% extends "static-layout.html" %}
+{% block content %}
+<div class="container-xxl">
+  <div class="authentication-wrapper authentication-basic container-p-y">
+    <div class="authentication-inner">
+      
+      <div class="card">
+        <div class="card-body">
+          <h4 class="mb-2">Mobile Number Verification</h4>
+          <p class="mb-4">Please enter the mobile number you want to
+            register with Vincam-RBM.</p>
+          <form id="mobile-number-verification-form" action="" method="post">
+            <div class="row">
+              <div class="mb-3">
+                <label for="mobileNumber" class="form-label">Mobile Number</label>
+                <div class="input-group">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="../static/img/india.png">
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="javascript:void(0);">INDIA</a></li>
+                      <li><a class="dropdown-item" href="javascript:void(0);">AFGANISTAN</a></li>
+                    </ul>
+                    <input type="number" name="mobileNumber" class="form-control" value="8978897889">
+                  </div>
+                  <p class="mobileNumber-validate"></p>
+              </div>
+              <div class="mb-3">
+                <a class="btn btn-secondary" href="">Clear</a>
+                <button type="submit" class="btn btn-primary">Continue</button>
+              </div>
+            </div>
+          </form>
+          <p class="mb-4">After clicking submit you will recieve an OTP on
+            the entered mobile number for verification.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$.validator.setDefaults({
+  submitHandler: function() {
+    alert("form-submitted!");
+    window.open("./mobile-otp-verification");
+  }
+});
+$.validator.addMethod(
+    "regex",
+    function(value, element, regexp) {
+        var check = false;
+        return this.optional(element) || regexp.test(value);
+    },
+    ""
+);
+$().ready(function() {
+    $("#mobile-number-verification-form").validate({
+			rules: {
+				mobileNumber: {
+					required: true,
+					minlength: 10
+				},
+			},
+			messages: {
+        mobileNumber: {
+					required: "Please provide mobile number",
+					minlength: "Your mobile number must consist of at least 10 digits"
+				},
+			},
+      errorPlacement: function (error, element) {
+            var name = $(element).attr("name");
+            error.appendTo($("." + name + "-validate"));
+      },
+		});
+
+	});
+</script>
+{% endblock %}

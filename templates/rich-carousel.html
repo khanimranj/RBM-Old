@@ -1,0 +1,341 @@
+
+{% extends "brand-layout.html" %}
+{% block content %}
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">Create Template /</span> Rich Card Carousel</h4>
+<div class="row">
+    <div class="col-md-6 col-lg-6 mb-6">
+        <div class="card">
+            <div class="card-body">
+                <form id="mainForm" method="post" action="/richcarousel" enctype="multipart/form-data">
+                    <div id="richCardContainer">
+                        <div class="rich-card" id="rich-card-1">
+                            <h5>Rich Card</h5>
+                            <div class="row">
+                                <input type="hidden" class="total-suggestions" id="total-suggestions-1" value="0">
+                                <div class="mb-3">
+                                    <label class="form-label" for="select_width">Select Media Width</label>
+                                    <select id="width-1" class="form-select form-control select_width">
+                                        <option value="" disabled="">Select</option>
+                                        <option value="SMALL">SMALL</option>
+                                        <option value="MEDIUM">MEDIUM</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label" for="select_height">Select Media Height</label>
+                                    <select id="height-1" class="form-select form-control select_height">
+                                        <option value="" disabled="">Select</option>
+                                        <option value="SHORT">SHORT</option>
+                                        <option value="MEDIUM">MEDIUM</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3 main-input2">
+                                    <label class="form-label" for="file-input-1">Image</label>
+                                    <input type='file' id="file-input-1" name="image" class="form-control file-input" />
+                                </div>
+                                <div class="mb-3 main-input2">
+                                    <label class="form-label" for="select_height">Card Title</label>
+                                    <input type="text" id="title-1" name="title" class="form-control title" value=""/>
+                                </div>
+                                <div class="d-flex justify-content-between flex-column flex-sm-row">
+                                    <div><strong>Add Call To Action</strong></div>
+                                    <div class="mb-3 text-end">
+                                        <button type="button" class="btn btn-secondary add-suggestion"><i class="bs bs-plus"></i> Add</button>
+                                    </div>
+                                </div>
+                                <div class="main-select">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mb-3 mt-3 text-end">
+                            <button type="button" id="add-rich-card" class="btn btn-secondary">Add Card</button>
+                            <button type="button" class="btn btn-primary" id="submitBtn">Submit</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-6 mb-6">
+        <div class="smartphone">
+            <!--data-bs-interval="5" -->
+            <div id="richCardCarousel" class="carousel slide carousel-dark ">
+                <div class="carousel-inner">
+                    <div class="carousel-item MEDIUM" id="preview-1"> 
+                        <div class="preview rich-carousel">
+                            <div class="image MEDIUM">
+                                <img src="./../static/img/camera.png"/>
+                            </div>
+                            <div class="content">
+                                <div class="description"></div>
+                                <div class="suggestions"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <a class="carousel-control-prev" href="#richCardCarousel" role="button" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </a>
+                    <a class="carousel-control-next" href="#richCardCarousel" role="button" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../static/js/libs/jquery/jquery.js"></script>
+<script type="text/javascript">
+    var richCardHtml = $(".rich-card").first().clone(); 
+    var carouselItemHtml = $(".preview").first().closest('.carousel-item').clone();
+    var suggestionHtml = `<div class="suggestion-box">
+                            <div class="row">
+                                <div class="input-group">
+                                    <select class="form-select select_type" placeholder="Type of Action">
+                                        <option value="1">Reply</option>
+                                        <option value="2">URL Action</option>
+                                        <option value="3">Dialer Action</option>
+                                    </select>
+                                    <input type="text" name="text" class="form-control" placeholder="Suggestion Text" />
+                                    <input type="text" name="Postback" class="form-control" placeholder="Suggestion Postback" />
+                                    <input type="text" name="url" class="form-control url-select" placeholder="URL/URI to open" />
+                                    <input type="text" name="phone-no" class="form-control phone-no-select" placeholder="Phone Number to Dial" />
+                                    <button type="button" class="btn btn-primary remove-suggesstion">
+                                        <i class="bx bx-x"></i>  
+                                    </button>
+                                </div>
+                            </div><br>`;
+
+function validateForm() {
+    var isValid = true;
+
+    // Loop through each suggestion box to validate
+    $('.suggestion-box').each(function() {
+        var typeOfAction = $(this).find('select.select_type').val();
+        var text = $(this).find('input[name="text"]').val();
+        var postback = $(this).find('input[name="Postback"]').val();
+
+        // Check for empty text and postback
+        if (!text || !postback) {
+            alert('Suggestion Text and Suggestion Postback cannot be empty');
+            isValid = false;
+            return false; // Exit loop
+        }
+
+        if (typeOfAction === '2') {
+            var url = $(this).find('input[name="url"]').val();
+            if (!url || !url.startsWith('http://') && !url.startsWith('https://')) {
+                alert('URL/URI to open cannot be empty and must start with http:// or https://');
+                isValid = false;
+                return false; // Exit loop
+            }
+        }
+
+        if (typeOfAction === '3') {
+            var phoneNo = $(this).find('input[name="phone-no"]').val();
+            if (!phoneNo || phoneNo.length < 12) {
+                alert('Phone Number to Dial cannot be empty and must be at least 10 digits');
+                isValid = false;
+                return false; // Exit loop
+            }
+        }
+    });
+
+    return isValid;
+}
+
+function updatePreview() { 
+    var id = $(this).closest('.rich-card').attr('id').split('-').pop();
+    $("#preview-"+id+" .description").text($("#title-"+id).val());
+    height = $("#height-"+id).val();
+    width = $("#width-"+id).val();
+
+    if(height == "SHORT"){
+        $("#preview-"+id+" .image").addClass("SHORT").removeClass("MEDIUM");
+    }
+    
+    if(height == "MEDIUM"){
+        $("#preview-"+id+" .image").addClass("MEDIUM").removeClass("SHORT");
+    }
+
+    if(width == "SMALL"){
+        $("#preview-"+id).closest(".carousel-item").addClass("SHORT").removeClass("MEDIUM");
+    }
+
+    if(width == "MEDIUM"){
+        $("#preview-"+id).closest(".carousel-item").addClass("MEDIUM").removeClass("SHORT");
+    }
+
+    var suggestionsHtml = '';
+    $("#rich-card-"+id+" .suggestion-box").each(function() {
+        var typeOfAction = $(this).find('select.select_type').val();
+        var text = $(this).find('input[name="text"]').val();
+        if (typeOfAction === '1') {
+            suggestionsHtml += '<a href="javascript: void(0);"><i class="bx bx-reply"></i>  ' + text + '</a>';
+        } else if (typeOfAction === '2') {
+            suggestionsHtml += '<a href="javascript: void(0);"><i class="bx bx-link"></i>  ' + text + '</a>';
+        } else if (typeOfAction === '3') {
+            suggestionsHtml += '<a href="javascript: void(0);"><i class="bx bx-phone"></i>  ' + text + '</a>';
+        }
+    });
+
+    $("#preview-"+id+" .suggestions").html(suggestionsHtml);
+}
+
+$(document).ready(function() {
+    $('.carousel').carousel({ interval: 1000, cycle: true });
+    $('.carousel-item').first().addClass('active');
+    $(document).on('input', '.rich-card .title', updatePreview);
+    $(document).on('input', '.rich-card .select_width', updatePreview);
+    $(document).on('input', '.rich-card .select_height', updatePreview);
+    $(document).on('input', '.suggestion-box input', updatePreview);
+    $(document).on('change', '.suggestion-box select', updatePreview);
+
+    $(document).on('click', '.add-suggestion', function() {
+        let id = $(this).closest('.rich-card').attr('id').split('-')[2],
+            total_suggestion_box = $('#total-suggestions-'+id)
+            counter = total_suggestion_box.val();
+        
+        if (counter < 3) {
+            $('#rich-card-'+id+' .main-select').append(suggestionHtml);
+            counter++;
+            total_suggestion_box.val(counter);
+        }
+
+    });
+
+    $(document).on('click', '.remove-suggestion', function() {
+        let id = $(this).closest('.preview').attr('id'),
+            total_suggestion_box = $('#total-suggestions-'+id)
+            counter = total_suggestion_box.val();
+        $(this).closest('.suggestion-box').remove();
+        counter--;
+        
+        total_suggestion_box.val(counter);
+    });
+
+    $(document).on('change', '.select_type', function(e) {
+        let type = $(this).val(),
+            suggestionBox = $(this).closest('.suggestion-box');
+
+        if (type === '1') {
+            suggestionBox.find('.url-select').hide();
+            suggestionBox.find('.phone-no-select').hide();
+        }
+        if (type === '2') {
+            suggestionBox.find('.url-select').show();
+            suggestionBox.find('.phone-no-select').hide();
+        }
+        if (type === '3') {
+            suggestionBox.find('.url-select').hide();
+            suggestionBox.find('.phone-no-select').show();
+        }
+    });
+
+    $(document).on('change', '.select_height', function(e) {
+        let height = $(this).val();
+        
+    });
+
+    $(document).on('change', '.file-input', function(e) {
+        var fileInput = $(this)[0];
+        var filePath = fileInput.value;
+        var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+        if (!allowedExtensions.exec(filePath)) {
+            alert("Please upload file having extensions .jpg/.jpeg/.png/.gif only.");
+            fileInput.value = '';
+            return false;
+        }
+        
+        var id = $(this).attr('id').split('-').pop();
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                $(".smartphone #preview-"+id+" .image img").attr({"src": e.target.result});
+            }
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+
+    $("#add-rich-card").click(function() {
+        richCardHtml = $(richCardHtml).clone();
+        carouselItemHtml = $(carouselItemHtml).clone();
+        let nextId = $('.rich-card').length + 1;
+        $(richCardHtml).attr('id', "rich-card-" + nextId);
+        $(richCardHtml).find('input[type="file"]').attr('id', "rich-card-" + nextId);
+        $(richCardHtml).find('input[type="file"]').attr('name', "file-input-" + nextId);
+        $(richCardHtml).find('input.title').attr('id', "title-" + nextId);
+        $(richCardHtml).find('.select_width').attr('id', "width-" + nextId);
+        $(richCardHtml).find('.select_height').attr('id', "height-" + nextId);
+        $(richCardHtml).find('.total-suggestions').attr('id', "total-suggestions-" + nextId);
+        $("#richCardContainer").append(richCardHtml);
+        $('.carousel-item').removeClass('active');
+        $(carouselItemHtml).addClass("active");
+        $(carouselItemHtml).attr("id", "preview-" + nextId);
+        $(".carousel-inner").append(carouselItemHtml);
+    });
+    
+    $("#submitBtn").click(function() {
+        if (!validateForm()) 
+            return false;
+        
+        var allCardContents = [];
+        var formData = new FormData();
+
+        $('.rich-card').each(function() {
+            var suggestions = [];
+            $(this).find('.suggestion-box').each(function() {
+                var row = {};
+                row.typeOfAction = $(this).find('select.select_type').val();
+                row.text = $(this).find('input[name="text"]').val();
+                row.postback = $(this).find('input[name="Postback"]').val();
+                if (row.typeOfAction === '2') {
+                    row.url = $(this).find('input[name="url"]').val();
+                } else if (row.typeOfAction === '3') {
+                    row.phoneNo = $(this).find('input[name="phone-no"]').val();
+                }
+                suggestions.push(row);
+            });
+
+            var cardContents = {
+                "title": $(this).find('#title').val(),
+                "suggestions": suggestions,
+                "media": {
+                    "height": $(this).find('#select_height').val(),
+                    "contentInfo": {
+                        "fileUrl": "fakepath",
+                        "forceRefresh": "false"
+                    }
+                }
+            };
+
+            allCardContents.push(cardContents);
+        });
+
+        formData.append('allCardContents', JSON.stringify(allCardContents));
+        var images = []
+        $('.rich-card').each(function(index) {
+            var imageId = "file-input-" + (index + 1);
+            var imageFile = document.getElementById(imageId).files[0];
+            formData.append('images[]', imageFile);
+        });
+
+        $.ajax({
+            url: '/richcarousel',
+            type: 'POST',
+            data: formData,
+            processData: false, // Important!
+            contentType: false, // Important!
+            success: function(response) {
+                console.log('Success:', response);
+            },
+            error: function(err) {
+                console.error('Error:', err);
+            }
+        });
+    });
+});
+</script>
+
+{% endblock %}

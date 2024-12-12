@@ -1,0 +1,90 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+    font-size: 16px;
+}
+
+header {
+    background-color: #000;
+}
+
+#logo {
+    font-weight: bold;
+    margin-right: auto; /* Aligns the logo to the left */
+    font-size: 28px;
+    color: #eaeaea;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px 15px;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+nav a:hover, .dropdown-content a:hover {
+    background-color: #3e4e56;
+    color: #ffffff;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropbtn {
+    background-color: #2f3e46; /* Same as header bg color */
+    color: #ffffff;
+    padding: 10px 15px;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #2f3e46;
+    min-width: 160px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    top: 150%; /* This will position the dropdown right below the nav element */
+    left: 0; /* Aligns the dropdown with the left edge of the button */
+}
+
+.dropdown-content a {
+    color: #ffffff;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: #3e4e56;
+}
+
+/* Responsive design for smaller screens */
+@media screen and (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+    }
+    nav ul li {
+        margin: 0;
+    }
+    .dropdown-content {
+        position: relative;
+    }
+}

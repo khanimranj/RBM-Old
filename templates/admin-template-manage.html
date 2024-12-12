@@ -1,0 +1,83 @@
+{% extends "admin-layout.html" %}
+{% block content %}
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">Approve Templates</span></h4>
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 d-flex justify-content-center justify-content-md-end">
+                <div class="dataTables_filter">
+                    <label>Search: <input type="search" class="form-control" placeholder=""></label>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <tr>
+                <th style="width: 5%;">ID</th>
+                <th style="width: 10%;">Type</th>
+                <th style="width: 10%;">Usage</th>
+                <th style="width: 15%;">Created Date</th>
+                <th style="width: 10%;">Template ID</th>
+                <th style="width: 10%;">Status</th>
+                <th style="width: 40%;">Action</th>
+            </tr>
+            {% for template in templates.items %}
+                <tr>
+                    <td>{{ template.template_id }}</td>
+                    <td>{{ template.template_type }}</td>
+                    <td>{{ template.usagetype }}</td>
+                    <td>{{ template.created_date }}</td>
+                    <td><a href="{{ url_for('template_details', template_id=template.template_id) }}">{{ template.TemplateID }}</a></td>
+                    <td>{{ template.status }}</td>
+                    <td>
+                        <a class="btn btn-primary {{'hide' if template.status=='Approved' }}" href="{{ url_for('approve_template', id=template.template_id) }}">Approve</a>
+                        <a class="btn btn-secondary {{'hide' if template.status=='Declined' }}" href="{{ url_for('reject_template', id=template.template_id) }}">Reject</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table><br>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 d-flex justify-content-center justify-content-md-end">
+              <div class="dataTables_paginate paging_simple_numbers">
+                <ul class="pagination">
+                    {% if templates.prev_num and templates.prev_num != 1 and templates.pages > 1 %}
+                        <li class="paginate_button page-item">
+                            <a href="?page=1" class="page-link">First</a>
+                        </li>
+                        <li class="paginate_button page-item">
+                            <a href="?page={{ templates.prev_num }}" class="page-link">Previous</a>
+                        </li>
+                    {% endif %}
+                    {% for page_num in templates.iter_pages() %}
+                        {% if page_num %}
+                            {% if templates.page == page_num %}
+                                <li class="paginate_button page-item active">
+                                    <span class="current page-link">{{ page_num }}</span>
+                                </li>
+                            {% else %}
+                                <li class="paginate_button page-item">
+                                    <a href="?page={{ page_num }}" class="page-link">{{ page_num }}</a>
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            <li class="paginate_button page-item">
+                                <span class="ellipsis page-link">...</span>
+                            </li>
+                        {% endif %}
+                        </li>
+                    {% endfor %}
+                    {% if templates.next_num and templates.next_num <= templates.pages %}
+                        <li class="paginate_button page-item">
+                            <a href="?page={{ templates.next_num }}" class="page-link">Next</a>
+                        </li>
+                        <li class="paginate_button page-item">
+                            <a href="?page={{ templates.pages }}" class="page-link">Last</a>
+                        </li>
+                    {% endif %}
+                </ul>
+              </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+{% endblock %}

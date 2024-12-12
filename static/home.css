@@ -1,0 +1,173 @@
+body{
+    margin: 0;
+}
+.contact-form{
+    background: #fff;
+    margin-top: 10%;
+    margin-bottom: 5%;
+    width: 70%;
+}
+.contact-form h3{
+    text-align: center;
+    color: #0062cc;
+}
+.main-input input.form-control {
+    margin: 15px 0%;
+}
+.add-btn{
+    text-align: end;
+}
+.act_btn{
+    background: transparent;
+    border: 1px solid black;
+    padding: 5px 10px;
+
+}
+.suggestion-box {
+    margin: 15px 0%;
+    display: flex;
+    justify-content: space-between;
+    background: #d9d9d973;
+    padding: 20px 15px;
+    border: 1px solid #80808063;
+    align-items: self-end;
+}
+.inner-select{
+    width: 30%;
+    margin: 0px 12px;
+}
+.url,.phone-no{
+    display: none;
+}
+
+p{
+    margin:0;
+}
+#file-input{
+    margin-left:7px;
+    padding:10px;
+    background-color:gray;
+}
+.image-short{
+    height:224px;
+    width:100%;
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.image-medium{
+    height:336px;
+    width:100%;
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.main-input{
+    margin: 50px;
+}
+.main-input2{
+    margin: 10px 0px;
+}
+.main-input select{
+    margin: 10px 0px;
+}
+/* .Alignment{
+    display: none;
+} */
+.screen-text {
+    width: 60%;
+    padding: 12px 12px 5px 12px;
+}
+.screen-image {
+    width: 50%;
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    height: auto !important;
+}
+.screen-image-row{
+    width: 50%;
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-top: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.screen-image-row .image-icon {
+    width: 40%;
+}
+.screen-image-row.row-preview{
+    flex-direction: row-reverse!important;
+}
+img:empty{
+    display: none;
+}
+.card-title{
+    font-size: 16px;
+    font-weight: 700;
+    padding: 10px;
+}
+.card-description{
+    font-size: 14px;
+    padding: 10px;
+}
+.preview-section {
+    border: 1px solid #ccc;
+    margin-top: 20px;
+    padding: 10px;
+}
+
+.preview-content {
+    margin-top: 10px;
+}
+
+.preview-item {
+    margin-bottom: 5px;
+}
+.preview-container {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin-top: 20px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    /* New style to adjust its width relative to form container */
+    flex: 0.5;
+}
+
+.preview-header {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+.preview-body {
+    padding: 10px;
+}
+.preview-text {
+    max-width: 250px;  /* This width will vary based on the font size you're using. */
+    white-space: pre-line; /* This ensures that text wrapping happens naturally. */
+    overflow-wrap: break-word; /* Breaks the line at arbitrary points if needed. */
+}
+.preview-suggestions i {
+    background-color: #ddd;
+    padding: 10px;
+    border-radius: 50%; /* This makes it an ellipse. */
+    margin-right: 5px;
+}
+.flex-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: start;
+}
+.form-section {
+    flex: 0.6;
+    margin-right: 2%;
+}
+.preview-section {
+    flex: 0.4;
+}

@@ -1,0 +1,65 @@
+{% extends "static-layout.html" %}
+{% block content %}
+<div class="container-xxl">
+  <div class="authentication-wrapper authentication-basic container-p-y">
+    <div class="authentication-inner">
+      <!-- Register -->
+      <div class="card">
+        <div class="card-body">
+          <h4 class="mb-2">Let’s get started!</h4>
+          <p class="mb-4">Create your free account.</p>
+          <form id="signup-form" class="signup-form" onsubmit="return false">
+            <div class="mb-3">
+              <label for="email" class="form-label">Email ID</label>
+              <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email address" autofocus />
+            </div>
+            <div class="mb-3">
+              <input name="tc_checkbox" type="checkbox" name="terms" checked="" style="cursor: pointer;"> <span class="form-info">I accept the <a href="/terms" style="cursor: pointer;">Terms and Conditions</a>.</span>
+            </div>
+            <div class="mb-3">
+              <button type="reset" class="btn btn-secondary">Reset</button> &nbsp; 
+              <button type="submit" class="btn btn-primary">Signup</button>
+            </div>
+            
+            <p class="mb-4">Already have an account? <a href="/login" style="cursor: pointer;">Sign in</a></p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script>
+$.validator.setDefaults({
+  submitHandler: function() {
+    alert("form-submitted!");
+    window.open('./signup-verification-sent');
+  }
+});
+$().ready(function() {
+    $("#signup-form").validate({
+			rules: {
+				email: {
+					required: true,
+					email: true
+				},
+				terms: {
+					required: true
+				}
+			},
+			messages: {
+        email: {
+					required: "Please provide your email",
+					email: "Your enter valid email address"
+				},
+        terms: {
+					required: "Please access the Terms and Conditions"
+				}
+			},
+      errorPlacement: function (error, element) {
+        var name = $(element).attr("name");
+        error.appendTo($("." + name + "-validate"));
+      },
+		});
+	});
+</script>
+{% endblock %}

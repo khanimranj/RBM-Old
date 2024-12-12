@@ -1,0 +1,285 @@
+{% extends "brand-layout.html" %}
+{% block content %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div class="row">
+    <div class="col-lg-10 mb-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            Delivery Rate
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="deliveryRateChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-6 mb-4">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            Open Rate
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="openRateChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-2 col-md-4">
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <span class="fw-medium d-block mb-1">Total</span>
+                    <h3 class="card-title mb-2">{{ total_cumulative }}</h3>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <span class="fw-medium d-block mb-1">Sent</span>
+                    <h3 class="card-title mb-2">{{ sent_cumulative }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <span class="fw-medium d-block mb-1">Best Performing Campaign</span>
+                    <h3 class="card-title mb-2">{{ best_performing_campaign }}</h3>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <span class="fw-medium d-block mb-1">Best Performing Day</span>
+                    <h3 class="card-title mb-2">{{ best_performing_day }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    Bounce Rate
+                </div>
+            </div>
+            <div class="card-body">
+                <canvas id="bounceRateChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-lg-6 col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    Blacklist Rate
+                </div>
+            </div>
+            <div class="card-body">
+                <canvas id="blacklistRateChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 mb-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="fw-medium d-block mb-1">Was Read</span>
+                        <h3 class="card-title mb-2">{{ was_read_cumulative }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="fw-medium d-block mb-1">Delivered</span>
+                        <h3 class="card-title mb-2">{{ delivered_cumulative }}</h3>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="fw-medium d-block mb-1">Blacklisted</span>
+                        <h3 class="card-title mb-2">{{ blacklisted_cumulative }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="fw-medium d-block mb-1">Failed</span>
+                        <h3 class="card-title mb-2">{{ failed_cumulative }}</h3>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<br/>
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="fw-medium d-block mb-1">Total Templates</span>
+                        <h3 class="card-title mb-2">{{ total_templates }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="fw-medium d-block mb-1">Templates Approved</span>
+                        <h3 class="card-title mb-2">{{ Approved }}</h3>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-12 col-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="fw-medium d-block mb-1">Templates Pending</span>
+                        <h3 class="card-title mb-2">{{ Pending }}</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12 col-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <span class="fw-medium d-block mb-1">Templates Rejected</span>
+                        <h3 class="card-title mb-2">{{ Declined }}</h3>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-6 mb-4">
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <span class="fw-medium d-block mb-1">Total Campaigns Executed</span>
+                    <h3 class="card-title mb-2">{{ total_campaigns_executed }}</h3>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <span class="fw-medium d-block mb-1">Best Call to Action</span>
+                    <h3 class="card-title mb-2">{{ best_call_to_action }}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6 col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <div class="card-title">
+                    Sent to Read Ratio
+                </div>
+            </div>
+            <div class="card-body">
+                <canvas id="sentToReadRatioChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    var campaignLabels = {{ campaign_labels | tojson }};
+    var deliveryRates = {{ delivery_rates | tojson }};
+    var openRates = {{ open_rates | tojson }};
+    var bounceRates = {{ bounce_rates | tojson }};
+    var blacklistRates = {{ blacklist_rates | tojson }};
+    var sentToReadRatios = {{ sent_to_read_ratios | tojson }};
+
+    // Function to create a chart
+    function createChart(chartId, label, data, backgroundColor, borderColor) {
+        var ctx = document.getElementById(chartId).getContext('2d'),
+            type = "";
+
+
+        if(chartId == "deliveryRateChart"){
+            type ="line";
+        }
+        if(chartId == "openRateChart"){
+            type ="bar";
+        }
+        if(chartId == "bounceRateChart"){
+            type ="line";
+        }
+        if(chartId == "blacklistRateChart"){
+            type ="bar";
+        }
+        if(chartId == "sentToReadRatioChart"){
+            type ="line";
+        }
+
+        return new Chart(ctx, {
+            type: type,
+            data: {
+                labels: campaignLabels,
+                datasets: [{
+                    label: label,
+                    data: data,
+                    backgroundColor: backgroundColor,
+                    borderColor: borderColor,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Initialize all charts
+    createChart('deliveryRateChart', 'Delivery Rate (%)', deliveryRates, 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 1)');
+    createChart('openRateChart', 'Open Rate (%)', openRates, 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 1)');
+    createChart('bounceRateChart', 'Bounce Rate (%)', bounceRates, 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 1)');
+    createChart('blacklistRateChart', 'Blacklist Rate (%)', blacklistRates, 'rgba(255, 206, 86, 0.2)', 'rgba(255, 206, 86, 1)');
+    createChart('sentToReadRatioChart', 'Sent to Read Ratio', sentToReadRatios, 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 1)');
+</script>
+{% endblock %}

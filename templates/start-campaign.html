@@ -1,0 +1,68 @@
+{% extends "brand-layout.html" %}
+{% block content %}
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">Start Campaign</h4>
+<div class="row">
+    <div class="col-md-6 col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-header">You are starting a campaign with the following template details:</div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="mb-3">
+                        <label class="form-label">Template ID</label>
+                        <p>{{ template.template_id }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Template Type</label>
+                        <p>{{ template.template_type }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Created Date</label>
+                        <p>{{ template.created_date }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Status</label>
+                        <p>{{ template.status }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Template Content</label>
+                        <p>{{ input_string }}</p>
+                    </div>
+                    <div class="mb-3">
+                        <p>This template requires <strong>{{ number_of_required_variables }}</strong> variables. Please ensure the file has the relevant information.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-6 mb-4">
+        <div class="card">
+            <div class="card-body">
+                <form action="/start_campaign/{{ id }}" method="post" enctype="multipart/form-data">
+                    <input type="hidden" name="template_id" value="{{ id }}">
+                    <div class="row">
+                        <div class="mb-3">
+                            <label class="form-label" for="campaign_name">Campaign Name</label>
+                            <input type="text" class="form-control" id="campaign_name" name="campaign_name">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="start_date">Start Date</label>
+                            <input type="datetime-local" class="form-control" id="start_date" name="start_date">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="end_date">End Date</label>
+                            <input type="datetime-local" class="form-control" id="end_date" name="end_date">
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label" for="campaign_name">Upload Data</label>
+                            <input type="file" class="form-control" id="data_file" name="data_file">
+                        </div>
+                        <div class="mb-3">
+                            <input type="submit" class="btn btn-primary" value="Start Campaign">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

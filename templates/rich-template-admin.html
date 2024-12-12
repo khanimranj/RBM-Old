@@ -1,0 +1,322 @@
+
+{% extends "admin-layout.html" %}
+{% block content %}
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">Create Template /</span> Rich Template</h4>
+<div class="row">
+    <div class="col-md-6 col-lg-6 mb-6">
+        <div class="card">
+            <form id="mainForm" method="post" action="/rich" enctype="multipart/form-data">
+                <h5 class="card-header">Create a New Rich Template</h5>
+                <div class="card-body">
+                    <div class="mb-3 Orientation">
+                        <label class="form-label" for="typeSelect">Select Card Orientation</label>
+                        <select id="select_orientation" class="form-select">
+                            <option value="" disabled="">Select</option>
+                            <option value="VERTICAL">VERTICAL</option>
+                            <option value="HORIZONTAL">HORIZONTAL</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 Alignment">
+                        <label class="form-label" for="basic-default-company">Select Card Alignment</label>
+                        <select id="select_alignment" class="form-select" disabled>
+                            <option value="" disabled>Select</option>
+                            <option value="LEFT">Left</option>
+                            <option value="RIGHT">Right</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 Height">
+                        <label class="form-label" for="basic-default-company">Select Media Height</label>
+                        <select id="select_height" class="form-select">
+                            <option value="" disabled="">Select</option>
+                            <option value="SHORT">SHORT</option>
+                            <option value="MEDIUM">MEDIUM</option>
+                            <option value="TALL">TALL</option>
+                        </select>
+                    </div>
+                    <div class="mb-3 main-input2">
+                        <label class="form-label" for="basic-default-company">Image</label>
+                        <input type='file' id="file-input" class="form-control" name="image" />
+                    </div>
+                    <div class="mb-3 main-input2">
+                        <label class="form-label" for="basic-default-company">Card Title</label>
+                        <input type="text" id="title" name="title" class="form-control" value=""/>
+                    </div>
+                    <div class="mb-3 main-input2">
+                        <label class="form-label" for="basic-default-company">Card Description</label>
+                        <textarea id="description" name="description" class="form-control"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-between flex-column flex-sm-row">
+                        <div><strong>Add Call To Action</strong></div>
+                        <div class="mb-3 text-end">
+                            <button type="button" class="btn btn-secondary add"><i class="bs bs-plus"></i> Add</button>
+                        </div>
+                    </div>
+                    <div class="main-select"></div>
+                    <br><div class="mb-3">
+                        <button type="button" class="btn btn-primary" id="submitBtn">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-6 mb-6">
+        <div class="smartphone">
+            <div class="preview VERTICAL">
+                <div class="image MEDIUM">
+                    <img src="./../static/img/camera.png"/>
+                </div>
+                <div class="content">
+                    <div class="title"></div>
+                    <div class="description"></div>
+                    <div class="suggestions"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+</style>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+    function validateForm() {
+        var isValid = true;
+        var fileInput = document.getElementById("file-input");
+        var imageFile = fileInput.files[0];
+
+        if (!imageFile) {
+            alert("Please upload a media or use a text template");
+            return false;
+        }
+
+        $('.suggestion-box').each(function() {
+            var typeOfAction = $(this).find('select[id="select_type"]').val();
+            var text = $(this).find('input[name="text"]').val();
+            var postback = $(this).find('input[name="Postback"]').val();
+
+            // Check for empty text and postback
+            if (!text || !postback) {
+                alert('Suggestion Text and Suggestion Postback cannot be empty');
+                isValid = false;
+                return false; // Exit loop
+            }
+
+            if (typeOfAction === '2') {
+                var url = $(this).find('input[name="url"]').val();
+                if (!url || !url.startsWith('http://') && !url.startsWith('https://')) {
+                    alert('URL/URI to open cannot be empty and must start with http:// or https://');
+                    isValid = false;
+                    return false; // Exit loop
+                }
+            }
+
+            if (typeOfAction === '3') {
+                var phoneNo = $(this).find('input[name="phone-no"]').val();
+                if (!phoneNo || phoneNo.length < 12) {
+                    alert('Phone Number to Dial cannot be empty and must be at least 10 digits');
+                    isValid = false;
+                    return false; // Exit loop
+                }
+            }
+        });
+
+        return isValid;
+    }
+
+    $(document).ready(function() {
+        var rowHtml = `<br/><div class="suggestion-box">
+                            <div class="row">
+                                <div class="input-group">
+                                    <select id="select_type" class="form-select" placeholder="Type of Action">
+                                        <option value="1">Reply</option>
+                                        <option value="2">URL Action</option>
+                                        <option value="3">Dialer Action</option>
+                                    </select>
+                                    <input type="text" name="text" class="form-control" placeholder="Suggestion Text" />
+                                    <input type="text" name="Postback" class="form-control" placeholder="Suggestion Postback" />
+                                    <input type="text" name="url" class="form-control url-select" placeholder="URL/URI to open" />
+                                    <input type="text" name="phone-no" class="form-control phone-no-select" placeholder="Phone Number to Dial" />
+                                    <button type="button" class="btn btn-primary remove">
+                                        <i class="bx bx-x "></i>  
+                                    </button>
+                                </div>
+                            </div>
+                        </div>`;
+        var counter = 0;
+
+        $(".add").click(function() {
+            if (counter < 3) {
+                $('.main-select').append(rowHtml);
+                counter++;
+            }
+        });
+
+        $("#file-input").change(function() { 
+            var fileInput = $(this)[0];
+            var filePath = fileInput.value;
+            var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif)$/i;
+
+            if (!allowedExtensions.exec(filePath)) {
+                alert("Please upload file having extensions .jpg/.jpeg/.png/.gif only.");
+                fileInput.value = '';
+                return false;
+            }
+
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $(".preview .image img").attr({"src": e.target.result});
+                }
+                reader.readAsDataURL(this.files[0]);
+            }
+        });
+
+        $(document).on('click', '.remove', function() {
+            $(this).closest('.suggestion-box').remove();
+            counter--;
+        });
+
+        $(document).on('change', '#select_type', function(e) {
+            var dropVal = $(this).val();
+            if (dropVal === '1') {
+                $(this).closest('.suggestion-box').find('.url-select').hide();
+                $(this).closest('.suggestion-box').find('.phone-no-select').hide();
+            }
+            if (dropVal === '2') {
+                $(this).closest('.suggestion-box').find('.url-select').show();
+                $(this).closest('.suggestion-box').find('.phone-no-select').hide();
+            }
+            if (dropVal === '3') {
+                $(this).closest('.suggestion-box').find('.url-select').hide();
+                $(this).closest('.suggestion-box').find('.phone-no-select').show();
+            }
+        });
+
+        $("#select_orientation").change(function(){
+            let orientation = $(this).val();
+            if(orientation == "HORIZONTAL"){
+                $(".preview").addClass("HORIZONTAL").removeClass("VERTICAL");
+                $("#select_alignment").attr("disabled", false);
+            }
+            
+            if(orientation == "VERTICAL"){
+                $(".preview").addClass("VERTICAL").removeClass("HORIZONTAL");
+                $("#select_alignment").attr("disabled", true);
+            }
+        });
+
+        $("#select_alignment").change(function(){
+            let alignment = $(this).val();
+            if(alignment == "RIGHT"){
+                $(".preview").addClass("RIGHT");
+            }
+            else{
+                $(".preview").removeClass("RIGHT");
+            }
+        });
+
+        $("#select_height").change(function(){
+            let height = $(this).val();
+            if(height == "SHORT"){
+                $(".preview .image").addClass("SHORT").removeClass("MEDIUM").removeClass("TALL");
+            }
+            
+            if(height == "MEDIUM"){
+                $(".preview .image").addClass("MEDIUM").removeClass("SHORT").removeClass("TALL");
+            }
+            
+            if(height == "TALL"){
+                $(".preview .image").addClass("TALL").removeClass("SHORT").removeClass("MEDIUM");
+            }
+        });
+        
+        $("#submitBtn").click(function() {
+            if (!validateForm()) {
+                return false;
+            }
+            var formData = new FormData();
+
+            // Add suggestions as JSON string
+            var suggestions = [];
+            $('.suggestion-box').each(function() {
+                var row = {};
+                row.typeOfAction = $(this).find('select[id="select_type"]').val();
+                row.text = $(this).find('input[name="text"]').val();
+                row.postback = $(this).find('input[name="Postback"]').val();
+                if (row.typeOfAction === '2') {
+                    row.url = $(this).find('input[name="url"]').val();
+                } else if (row.typeOfAction === '3') {
+                    row.phoneNo = $(this).find('input[name="phone-no"]').val();
+                }
+                suggestions.push(row);
+            });
+            formData.append('suggestions', JSON.stringify(suggestions));
+
+            // Add richCard data as JSON string
+            var richCard = {
+                "standaloneCard": {
+                    "thumbnailImageAlignment": $('#select_alignment').val(),
+                    "cardOrientation": $('#select_orientation').val(),
+                    "cardContent": {
+                        "title": $('#title').val(),
+                        "description": $('#description').val(),
+                        "media": {
+                            "height": $('#select_height').val(),
+                            "contentInfo": {
+                                "fileUrl": "fakepath",
+                                "forceRefresh": "false"
+                            }
+                        }
+                    }
+                }
+            };
+            formData.append('richCard', JSON.stringify(richCard));
+
+            // Add image file
+            var imageFile = document.getElementById('file-input').files[0];
+            formData.append('image', imageFile);
+
+            // Make the request
+            $.ajax({
+                url: '/rich',
+                type: 'POST',
+                data: formData,
+                processData: false, // Important!
+                contentType: false, // Important!
+                success: function(response) {
+                    console.log('Success:', response);
+                },
+                error: function(err) {
+                    console.error('Error:', err);
+                }
+            });
+        });
+        
+        $("#title").on('input', updatePreview);
+        $("#description").on('input', updatePreview);
+        $(document).on('input', '.suggestion-box input', updatePreview);
+        $(document).on('change', '.suggestion-box select', updatePreview);
+    });
+    
+
+    function updatePreview() {
+        $(".preview .title").text($("#title").val());
+        $(".preview .description").text($("#description").val());
+
+        var suggestionsHtml = '';
+        $('.suggestion-box').each(function() {
+            var typeOfAction = $(this).find('select[id="select_type"]').val();
+            var text = $(this).find('input[name="text"]').val();
+            if (typeOfAction === '1') {
+                suggestionsHtml += '<a href="javascript: void(0);"><i class="bx bx-reply"></i>  ' + text + '</a>';
+            } else if (typeOfAction === '2') {
+                suggestionsHtml += '<a href="javascript: void(0);"><i class="bx bx-link"></i>  ' + text + '</a>';
+            } else if (typeOfAction === '3') {
+                suggestionsHtml += '<a href="javascript: void(0);"><i class="bx bx-phone"></i>  ' + text + '</a>';
+            }
+        });
+
+        $(".preview .suggestions").html(suggestionsHtml);
+    }
+</script>
+{% endblock %}
+

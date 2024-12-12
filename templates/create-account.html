@@ -1,0 +1,75 @@
+{% extends "admin-layout.html" %}
+{% block content %}
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">Create Account</h4>
+<div class="row">
+    <div class="col-md-12 col-lg-8 mb-4">
+        <div class="card">
+            <form onsubmit="submitForm(); return false;">
+                <h5 class="card-header">Create Account</h5>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label" for="username">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="password">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="customerId">Customer ID</label>
+                        <input type="text" class="form-control" id="customerId" name="customerId" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="subAccountId">Sub Account ID</label>
+                        <input type="text" class="form-control" id="subAccountId" name="subAccountId" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label" for="agentId">Agent ID</label>
+                        <input type="text" class="form-control" id="agentId" name="agentId" required>
+                    </div>
+                    <div class="mb-3">
+                        <input type="submit" class="btn btn-primary" value="Submit">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    async function submitForm() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+
+        const customerId = document.getElementById('customerId').value;
+        const subAccountId = document.getElementById('subAccountId').value;
+        const agentId = document.getElementById('agentId').value;
+
+        const formData = {
+            username: username,
+            password: password,
+
+            customerId: customerId,
+            subAccountId: subAccountId,
+            agentId: agentId
+        };
+
+        const requestOptions = {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(formData)
+        };
+
+        try {
+            const response = await fetch('/createaccount', requestOptions);
+            if (response.ok) {
+                alert('Successfully submitted');
+            } else {
+                alert('Failed to submit');
+            }
+        } catch (error) {
+            alert('An error occurred: ' + error);
+        }
+    }
+</script>
+{% endblock %}
+

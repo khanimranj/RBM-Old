@@ -1,0 +1,434 @@
+{% extends "static-layout.html" %}
+{% block content %}
+<div class="container">
+    <br/><br/>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <h2 class="font-size-24 font-weight-600">RBM Policies</h2>
+                </div>
+                <div class="col-lg-12 col-md-12 faq-vi-maap-table">
+                    <h2 class="font-size-18 font-weight-600 margin-top-20">1. Introduction</h2>
+                    <p class="margin-top-20 padding-left-20">VinCam-RBM team handles the Business Verification and Agent Validation for ViBSL who has launched the RCS Business Messaging service for delivery to RCS users in India. To ensure that the RCS users in India have a safe and positive experience when interacting with brands, VinCam-RBM team, acting on behalf of ViBSL, and with the approval of ViBSL, has specified the policies for business communication over RCS (“RBM Policies”). These policies also provide a guideline of restricted content and prohibited behaviors. These policies may be further refined in collaboration with ViBSL.</p>
+                    <p class="margin-top-20 padding-left-20">VinCam-RBM team and ViBSL reserve the right to modify the RBM Policies at any time. VinCam-RBM team, acting on behalf of ViBSL, will exercise its discretion in the interpretation and enforcement of these policies in conjunction with the Terms of Service.</p>
+                    <p class="margin-top-20 padding-left-20">This document is targeted for businesses and developers who wish to launch their Agents for users in India via the VinCam-RBM Portal, which is provided and managed by VinCam-RBM team. Please follow these policies and guidelines while developing your Agents.</p>
+                    <h2 class="font-size-18 font-weight-600 margin-top-35">2. Definitions</h2>
+                    <p class="margin-top-20 padding-left-20"><strong>“Agent”</strong> or <strong>“RBM Agent”</strong> means a bot that communicates with the User via RBM.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Agent Assets”</strong> means some or all of Agent Name, Short Description, Long Description, TOS URL, Privacy Policy URL, Contact Info (Phone, Email, Website URL), Brand Logo, Banner Image, and Agent Screenshots.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>"Agent Logo”</strong> means a 224 x 224 pixel image, no larger than 50 KB, that acts as the identity of the Brand/RBM Agent.&nbsp; The Brand Logo is displayed next to each text message in the Chat Thread.&nbsp; The Agent Logo is also overlayed on the Banner Image on the Info &amp; Options Page.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Agent Name”</strong> is the name for an Agent.&nbsp; It is a string between 1 and 40 characters.&nbsp; It is the Sender ID of the Chat Thread.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Agent Screenshots”</strong> are 2 – 8 images showing exactly what End Users see on their mobile devices while using the Agent inside Messages.&nbsp; Agent Screenshots must include one image of the Bot &amp; Info Page of the Agent. The Agent Screenshots are used during verification and are visible to End Users on the Bot Store.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>"Agent Use Case”</strong> means one of (a) OTP, (b) Transactional, and (c) Promotional use case assigned to the Agent, for application of business rules.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Banner Image”</strong> is a 1440 x 448 pixel image, no larger than 200 KB, with an aspect ratio (45:14), that is displayed in the upper part of the Info &amp; Options Page,&nbsp; behind the Agent Logo.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Brand”</strong> is a product or service that is publicly distinguished from other products, services, or concepts. Every Agent must be assigned to a Brand.&nbsp; A Brand belongs to an Enterprise.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>"Brand Name”</strong> means the name of the Brand.&nbsp; It is an alphanumeric string between 1 and 128 characters.&nbsp; Every Brand must have a unique Brand Name. Brand Name is entered on the VinCam-RBM team Platform and is visible to the Developer.&nbsp; Brand Name is not visible to the End User.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Bot ID”</strong> is an internal ID on VinCam-RBM team platform that is used to identify every Agent.&nbsp; Every Agent has a unique Bot ID.&nbsp; Bot ID is NOT visible to the End User on Messages.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Chat Thread”</strong> is a conversation between the Agent and the End User.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Contact Info”</strong> means the Phone number, Email address, and Website URL for the Agent, that will be visible to the End User under the Info tab on the Info &amp; Options Page.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Developer”</strong> means the aggregator who is developing and launching Agents on behalf of the Brands.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“End User”</strong> or <strong>“User”</strong> is the user with the Messages app on the Android device.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Enterprise”</strong> is an entity, e.g., a corporation that owns one or more brands.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>Info &amp; Options Page</strong> is the screen displayed in the Messages app when clicking on the Agent Name in the Chat Thread. The Info &amp; Options Page includes two tabs. The Info tab shows the contacts for the Agent including the Phone Number, Email and Website. The Options tab includes options to view the Privacy Policy and Terms of Service for the Agent and the option to block or report spam.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Launched Agent”</strong> means an Agent that has been verified and is allowed to send and/or receive RCS messages to End Users.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Long Description”</strong> a string between 1 and 3000 characters.&nbsp;The Long Description is used during verification and is visible to End Users on the Bot Store.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Messages”</strong> or <strong>“Android Messages”</strong> is the Messages app by Google, that is pre-installed on Android&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; devices, and is the default SMS app for Android devices.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Privacy Policy URL”</strong> is the URL pointing to the privacy policy under which the Brand offers the Agent to End Users and is visible to users under the Options tab of the Info and Options page.&nbsp; Privacy policy tells End Users how and why the Brand is collecting their information. It spells out how the Brand may use the data, why the Brand uses it, and if the data is shared with others.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Promotion Initiation Hours”</strong> means 10 am – 9pm (7 days a week).</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“RBM”</strong> means RCS Business Messaging.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Short Description”</strong> a string between 1 and 100 characters.&nbsp; It is shown on the Info &amp; Options Page to the user.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“Terms of Service URL”</strong> is the URL pointing to the terms of service under which the Brand offers the Agent to End Users and is visible to users under the Options tab of the Info and Options page.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“ViBSL”</strong> means VinCam-RBM Idea Business Services Limited, a company incorporated under the laws of India having its registered address at 10th Floor, Birla Centurion, Century Mills Compound, Pandurang Budhkar Marg, Worli, Mumbai – 400 030, India.</p>
+                    <p class="margin-top-20 padding-left-20"><strong>“VinCam-RBM portal”</strong> means the portal provided to CPaaS providers or Aggregators or Developers by ViBSL for onboarding, Agent creation, Template creation and reports download. Link to the portal is <a href="https://virbm.in/" target="_blank" class="link-purple">https://virbm.in/</a></p>
+                    <h2 class="font-size-18 font-weight-600 margin-top-35">3. RBM Agent Details</h2>
+                    <p class="margin-top-20 padding-left-20">RBM Agents enable one-way A2P (Application to Person) or two-way conversational messaging (A2P and P2A) between Brands and End Users. Agents can use any of the RCS advanced messaging services, including animated or static images, audio, video, suggested replies, and suggested action buttons. Please see the whitepaper titled “Revolutionize Business Messaging with RCS”, available here, free of cost, for an introduction to RCS Business Messaging.</p>
+                    <p class="margin-top-20 padding-left-20">This section defines the guidelines for the Agent Assets to submitted. </p>
+                    <h4 class="margin-top-30 padding-left-35 font-size-16"><strong>3.1 Agent Name</strong></h4>
+                    <p class="margin-top-15 padding-left-35">Developers can use any name (up to 40 Characters) for their Agent keeping in mind its association with the Brand. The Agent Name can be a catchy phrase or a simple name. Each Launched needs to have a unique name, different from the Agent Name of any other Launched Agent. Duplicate names will not be accepted. </p>
+                    <h4 class="margin-top-30 padding-left-35 font-size-16"><strong>3.2 Short Description</strong></h4>
+                    <p class="margin-top-15 padding-left-35">The Short Description (up to 100 Characters) of the Agent is the text shown on the Info &amp; Options Page just below the Agent name. This should primarily indicate the main use case of the Agent. Any description which misleads the user about the primary use case of the Agent will not be accepted.</p>
+                    <h4 class="margin-top-30 padding-left-35 font-size-16"><strong>3.3 Agent Logo</strong></h4>
+                    <p class="margin-top-15 padding-left-35">The Bot Logo is a 224 x 224 pixel image no larger than 90 KB that acts as the identity of the Brand/RBM Agent. It is shown on the bot’s chat tile, conversation screen and info page. The user should be able to associate to the brand with the RBM Agents logo. The logo of the agent needs to adhere to the brand’s guidelines. The logo must not belong to another brand or be trademarked/owned by another brand. Any logo that is misleading the user about the brands association with the Agent will not be accepted.</p>
+                    <h4 class="margin-top-30 padding-left-35 font-size-16"><strong>3.4 Banner Image</strong></h4>
+                    <p class="margin-top-15 padding-left-35">The Banner Image is a 1440 x 448 pixel image, no larger than 200 KB, that is shown in the Info &amp; Options Page. This can be any image adhering to the brands branding guidelines. It can depict the Agents use case, promotional offers, tag lines etc. The Brand must have rights to the image. The image must not belong to another Brand or be trademarked/owned by another Brand. Any image that is misleading the End User about the Brands association with the Agent will not be accepted.</p>
+                    <h4 class="margin-top-30 padding-left-35 font-size-16"><strong>3.5 Long Description</strong></h4>
+                    <p class="margin-top-15 padding-left-35">The long description of the Agent will be used during verification process and shown on the Agent’s Bot Store Listing. This description is a space to elaborate on the use case of the Agent. Developers/Marketers can explain in detail the bot’s functionality, list its promotional offers, details of the brand, provide a support URL etc.</p>
+                    <p class="margin-top-15 padding-left-35">Any Long Description that misleads the user about the brand or the functionality will not be accepted. </p>
+                    <h4 class="margin-top-30 padding-left-35 font-size-16"><strong>3.6 Agent Screenshots</strong></h4>
+                    <p class="margin-top-15 padding-left-35">The Agent Screenshots are used for verification and shown on the Agent’s Bot Store listing. The Agent Screenshots let End Users see how the Agent looks and feels and help the End User understand the Agents functionalities.</p>
+                    <p class="margin-top-15 padding-left-35">The screenshots should only have the screens of the Agent as seen inside the Messages app on a mobile device. These screens should correctly capture the different functions of the agent and should be the same as seen in the Agent.</p>
+                    <p class="margin-top-15 padding-left-35">The minimum number of screenshots to be submitted is 2, and the maximum is 8. Its recommended that the screenshots include one screenshot of the Info &amp; Options Page of the Agent.</p>
+                    <h4 class="margin-top-30 padding-left-35 font-size-16"><strong>3.7 Agent Use Case</strong></h4>
+                    <p class="margin-top-15 padding-left-35">Use cases provide Agent insights and provide customized application of business rules. These use cases fulfill specific functions for End Users and help ensure the Agent has appropriate business rules applied. Every Agent is required to have an Agent Use Case assigned to it. Please choose the Agent Use Case carefully, as it cannot be changed after the Agent is launched. </p>
+                    <p class="margin-top-15 padding-left-35">The following three Agent Use Cases are supported for Agents to be launched in India.</p>
+                    <ol type="a" class="margin-left-40">
+                        <li class="margin-top-20"><a href="https://developers.google.com/business-communications/rcs-business-messaging/guides/learn/what-are-use-cases#OTP" target="_blank" class="link-purple">One Time Password (OTP)</a> - The OTP agent sends a one-time password required to securely authenticate an account or confirm a transaction. </li>
+                        <li class="margin-top-20"><a href="https://developers.google.com/business-communications/rcs-business-messaging/guides/learn/what-are-use-cases#transactional" target="_blank" class="link-purple">Transactional</a> - The Transactional agent sends notifications, updates, or alerts to share information directly relevant to a customer’s existing services or products. </li>
+                        <li class="margin-top-20"><a href="https://developers.google.com/business-communications/rcs-business-messaging/guides/learn/what-are-use-cases#promotional" target="_blank" class="link-purple">Promotional</a> - The Promotional agent sends sales, marketing, and promotional messages to new or existing customers, with the objective to increase awareness, engagement, and sales.</li>
+                    </ol>
+                    <p class="margin-top-20 margin-left-40">The business rules applicable for Promotional Agents are listed in the following section. </p>
+                    <h4 class="margin-top-30 padding-left-35 font-size-16"><strong>3.8 Business Rules for Promotional Agents:</strong></h4>
+                    <ol type="a" class="margin-left-40">
+                        <li class="margin-top-20">Brands can initiate conversations only during Promotion Initiation Hours.</li>
+                        <li class="margin-top-20">Brands can send four (4) A2P messages per Brand per End User per month (across all Promotional Agents of the Brand), subsequent messages will result in an error. The limitation does not apply to P2A messages. Further, each time an End User responds, the Brand will be allowed two (2) additional messages. </li>
+                    </ol>
+                    <p class="margin-top-25 margin-left-35">The business rules in India for the three use cases are summarized in the table below for convenience.</p>
+                    <div class="table-responsive margin-left-35 ">
+                        <table class="table-bordered table">
+                            <thead>
+                                <tr>
+                                    <th width="20%">Agent Use Case </th>
+                                    <th width="20%">'Block &amp; report' shown in conversation?</th>
+                                    <th width="60%">Business rules - applicable in India </th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <td><a href="https://developers.google.com/business-communications/rcs-business-messaging/guides/learn/what-are-use-cases#OTP" target="_blank" class="link-purple">OTP</a></td>
+                                    <td>No </td>
+                                    <td>None</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="https://developers.google.com/business-communications/rcs-business-messaging/guides/learn/what-are-use-cases#transactional" target="_blank" class="link-purple">Transactional</a></td>
+                                    <td>Yes</td>
+                                    <td>None</td>
+                                </tr>
+                                <tr>
+                                    <td><a href="https://developers.google.com/business-communications/rcs-business-messaging/guides/learn/what-are-use-cases#promotional" target="_blank" class="link-purple">Promotional</a></td>
+                                    <td>Yes</td>
+                                    <td>
+                                        <p>Time of day: Brands should initiate conversations only during 10am - 9pm (7 days a week) </p>
+                                        <p>Message limits: Four (4) A2P messages per brand per user per month, subsequent messages will result in an error. <br>Please note that the limitation does not apply to P2A messages. Further, each time a user responds, the Brand will be allowed two (2) additional messages.</p>
+                                    </td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <p class="margin-top-0 margin-left-35">Please go <a href="https://developers.google.com/business-communications/rcs-business-messaging/guides/learn/what-are-use-cases" target="_blank" class="link-purple">here</a> for more details.</p>
+                    <h2 class="font-size-18 font-weight-600 margin-top-35">4. Guidelines for Agent Assets </h2>
+                    <ul>
+                        <li class="margin-top-15">Use an Agent Name that can clearly be associated with your Brand and/or Enterprise, and/or service, that will help build trust with the users communicating with your Agent.</li>
+                        <li class="margin-top-15">Your Agent Assets must be the true assets of your Brand and/or Enterprise and mention these names clearly. </li>
+                        <li class="margin-top-15">Your Agent Assets cannot use words or images that infringe on a third party’s intellectual property (such as trademarks) </li>
+                        <li class="margin-top-15">Your Agent Assets, as visible to End Users cannot feature content that is mature, offensive, or illegal. </li>
+                        <li class="margin-top-15">All Agent Assets must be accurate and up to date.</li>
+                        <li class="margin-top-15">The Enterprise, Brand, and Agent Assets will be validated as per applicable laws.</li>
+                    </ul>
+                    <h2 class="font-size-18 font-weight-600 margin-top-35">5. Brand and Developer Details</h2>
+                    <p class="margin-top-0 margin-left-20">Every Agent needs to be associated to a Brand. A Brand is a name or trademark that identifies a product/service or provider of the product/service. The Agent is associated with branding and business information such as colors, images, and contact information. As the Agent is the direct medium for the users to interact with the Brand there should be no ambiguity in the Brands identity. Any misinformation about the Brand will not be accepted.</p>
+                    <p class="margin-top-0 margin-left-20">Each Brand must have a unique Brand Name. Variations of Brand Names are not permitted. (e.g., 724, The 724, 724 Ltd, a 724, are variations of a single Brand Name, an only one of these can be used) Brands are not permitted bypass the Business Rules for Promotional Agents specified in Section 3.8 by using different Brand Names to register different Agents.</p>
+                    <p class="margin-top-0 margin-left-20">The Brand website should be the official online presence of the brand.</p>
+                    <p class="margin-top-0 margin-left-20">The Developer Name is the name of the entity that has developed the Agent - this can be any third-party developer or the Brand itself. The Developer Name is used for verification, reporting, billing, and, if desired, for the Bot Store listing. The Developer Name is not visible to users in the Messages app. </p>
+                    <p class="margin-top-0 margin-left-20">Brands need to provide a logo, identify the industry type they belong to and provide a set of identification documents of the Enterprise who owns the Brand, along with the Brand’s Point of Contact with official contact email as part of submitting the Agent and Brand for verification. Two of the following documents are required for verification of business - </p>
+                    <ol type="1" class="margin-left-25">
+                        <li class="margin-top-15">PAN Card of the Enterprise </li>
+                        <li class="margin-top-15">GST Document of the Enterprise</li>
+                        <li class="margin-top-15">Certificate of Incorporation of the Enterprise given by Ministry of Corporate Affairs</li>
+                        <li class="margin-top-15">Others (in case none of the above is available, please contact us to see if other available documents can be considered for verification) </li>
+                    </ol>
+                    <p class="margin-left-35 margin-top-20">Click <a href="https://dotgoglobal-my.sharepoint.com/:x:/g/personal/mumick_dotgo_com/Ef3tksaI0vRNtn1QksAD4U4BqtRIcLX6o8rOaApNSWZ0vQ?e=m2vPSP" target="_blank">here</a> to see an excel sheet that captures the complete list of items to be collected from a Brand for onboarding and launch of Agents.</p>
+                    <h2 class="font-size-18 font-weight-600 margin-top-35">6. Policies for Agent Assets</h2>
+                    <p class="margin-top-20 padding-left-20">Each Agent is linked to a Brand and a Brand can have multiple Agents associated with it. The following conditions apply when onboarding and launching Agents.</p>
+                    <div class="table-responsive padding-left-20">
+                        <table class="table-bordered table">
+                            <thead>
+                                <tr>
+                                    <th width="7%"></th>
+                                    <th width="42%">Scenario </th>
+                                    <th width="9%">Policy</th>
+                                    <th width="42%">Notes</th>
+                                </tr>
+                            </thead>
+                            <thead>
+                                <tr>
+                                    <td>1.</td>
+                                    <td>A Brand can have different Agents for different Agent Use Cases (e.g., for OTP, Promo, Transactional)</td>
+                                    <td>Yes</td>
+                                    <td>A Brand must have different Agents for different Agent Use Cases (e.g., for OTP, Promo, Transactional) </td>
+                                </tr>
+                                <tr>
+                                    <td>2.</td>
+                                    <td>Launched Agents can have duplicate Agent Names. </td>
+                                    <td>No</td>
+                                    <td>Agent Names of Launched Agents must be unique. Agent Names are checked for uniqueness at time of verification.</td>
+                                </tr>
+                                <tr>
+                                    <td>3.</td>
+                                    <td>Agents can have duplicate Agent Names at time of creation.</td>
+                                    <td>Yes</td>
+                                    <td>Agent Names are checked for uniqueness at time of verification. Thus, prior to submission of an Agent for verification, the Agent may have a name duplicated with any launched or unlaunched Agent. The Developer will be informed about the conflict during the verification process.</td>
+                                </tr>
+                                <tr>
+                                    <td>4.</td>
+                                    <td>The Agents for different Agent Use Cases belonging to a single Brand can have the same Agent Names</td>
+                                    <td>No</td>
+                                    <td>Each Launched Agent must have a unique Agent Name. Thus, if a Brand has different launched Agents for different Agent Use Cases, each Agent must be given a different Agent Name. e.g., Kotak, Kotak OTP, Kotak Offers. </td>
+                                </tr>
+                                <tr>
+                                    <td>5.</td>
+                                    <td>A Brand can use variants of its brand name (e.g., Kotak, Kotak Company, The Kotak, Kotak WIN, KOTAK A) when launching different Agents </td>
+                                    <td>No</td>
+                                    <td>
+                                        <p>The same brand name needs to be used for all agents. E.g., Kotak for all agents.</p>
+                                        <p>If Agents are submitted with Brand Name variants, they will either be rejected, or be normalized to a common Brand Name, and be subject to the four (4) A2P messages per End User per month across all the Promotional Agents.</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>6.</td>
+                                    <td>An Enterprise can have multiple Brands that do not share a common word (e.g., Pepsodent, Dove, Closeup as examples of separate brands from Unilever; Chroma, Titan, Air India, Air Vistara as four separate brands from Tata Group) </td>
+                                    <td>Yes</td>
+                                    <td>Each Brand of an Enterprise will be subject to separate Business Rules for Promotional Agents (4 A2P messages per Brand per End User per month)</td>
+                                </tr>
+                                <tr>
+                                    <td>7.</td>
+                                    <td>An Enterprise can have multiple Brands that share some common words as long as they are distinct brands (e.g., Tata Steel, Tata Tea, Tata Communications Services as separate brands from Tata Group; Kotak Bank, Kotak Insurance, Kotak Securities, Kotak AMC, Kotak Mahindra Investments as example of multiple separate brands from Kotak) </td>
+                                    <td>Yes</td>
+                                    <td>Each Brand of an Enterprise will be subject to separate Business Rules for Promotional Agents (4 A2P messages per Brand per End User per month)</td>
+                                </tr>
+                                <tr>
+                                    <td>8.</td>
+                                    <td>Two different brands have the same Agent Name for launched Agents (e.g., Kotak and HDFC both have agents with Agent Name = “Bank”, or Agent Name = "Interest Rates"; or Marriott and Taj both have agents with Agent Name = “Flowers”) </td>
+                                    <td>No</td>
+                                    <td>Each launched Agent must have a unique Agent Name, so two different launched Agents belonging to two different brands cannot have the same Agent Names.</td>
+                                </tr>
+                                <tr>
+                                    <td>9.</td>
+                                    <td>Two Agents from the same Brand have the same Agent Name </td>
+                                    <td>No</td>
+                                    <td>Each Agent must have a unique Agent name, so two different Agents belonging to the same Brand cannot have the same Agent Names.</td>
+                                </tr>
+                                <tr>
+                                    <td>10.</td>
+                                    <td>Multiple Agents of a Brand can use the same Agent Logo and Banner Image </td>
+                                    <td>Yes</td>
+                                    <td>Provided the logo and banner image meet the criteria for Agent Assets </td>
+                                </tr>
+                                <tr>
+                                    <td>11.</td>
+                                    <td>Multiple Agents of a Brand can use the same Agent Logo but different Banner Image </td>
+                                    <td>Yes</td>
+                                    <td>Provided the logo and banner image meet the criteria for Agent Assets </td>
+                                </tr>
+                                <tr>
+                                    <td>12.</td>
+                                    <td>A Brand can use variants of its Brand’s Logo as its Agent Logo when launching different Agents</td>
+                                    <td>Yes</td>
+                                    <td>Provided the logo meets the criteria for Agent Assets </td>
+                                </tr>
+                                <tr>
+                                    <td>13.</td>
+                                    <td>The Agent Name for an Agent can be changed after launch of the Agent </td>
+                                    <td>No</td>
+                                    <td>The Agent Name cannot be changed after launch. The Agent Name can only be changed prior to submission for verification. </td>
+                                </tr>
+                                <tr>
+                                    <td>14.</td>
+                                    <td>The Agent Logo and Banner Image can be changed after launch of the Agent. </td>
+                                    <td>No</td>
+                                    <td>The Agent Logo and Banner Image cannot be changed after launch. The Agent Logo and Banner Image can only be changed prior to submission for verification. </td>
+                                </tr>
+                                <tr>
+                                    <td>15.</td>
+                                    <td>The Agent Use Case can be changed after launch of the Agent. </td>
+                                    <td>No</td>
+                                    <td>The Agent Use case cannot be changed after launch. The Agent Use case can only be changed prior to submission for verification. </td>
+                                </tr>
+                                <tr>
+                                    <td>16.</td>
+                                    <td>A Brand can migrate from one developer to another (Portability) </td>
+                                    <td>Yes</td>
+                                    <td>A brand can request, through its new developer, to migrate from an existing developer to a new developer. </td>
+                                </tr>
+                                <tr>
+                                    <td>17.</td>
+                                    <td>Different Brands of an Enterprise can use different Developers to launch Agents </td>
+                                    <td>Yes</td>
+                                    <td>Different Brands for an Enterprise can work with different Developers,</td>
+                                </tr>
+                                <tr>
+                                    <td>18.</td>
+                                    <td>One Brand of an Enterprise can use different Developers to launch Agents </td>
+                                    <td>No</td>
+                                    <td>All Agents for a single Brand must be launched with the same Developer </td>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <h2 class="font-size-18 font-weight-600 margin-top-35">7. Portability</h2>
+                    <p class="margin-top-20 padding-left-20">Each Brand has full choice and freedom to work with any Developer of their choice, or even to move from one Developer to another (example, for better service, better price, or as result of M&amp;A). The process of moving Developers is to be initiated by the new Developer (NewD) chosen by the Brand and involves a rigorous verification process to ensure the move is legitimate.</p>
+                    <p class="margin-top-15 padding-left-20">The portability process for moving a Brand’s Agents from its current Developer (CurD) to a NewD is as follows:</p>
+                    <ul type="disc" class="margin-left-25">
+                        <li class="margin-top-15">Process is to be led by NewD.</li>
+                        <li class="margin-top-15">Brand requests the port in writing by issuing a letter to NewD, with copy to CurD. The letter must include name, title, email, phone number, and address of an authorized person at the Brand who is requesting the port.</li>
+                        <li class="margin-top-15">VinCam-RBM team will contact the Brand by email and ask for email response to confirm porting.</li>
+                        <li class="margin-top-15">VinCam-RBM team will contact the Brand by phone for a double confirmation.</li>
+                        <li class="margin-top-15">VinCam-RBM team may perform additional diligence as appropriate under the circumstances.</li>
+                        <li class="margin-top-15">VinCam-RBM team will contact CurD to inform CurD of the port.</li>
+                        <li class="margin-top-15">NewD can submit Brand's Agents from its account on VIRBM Portal for verification and launch.</li>
+                        <li class="margin-top-15">Charges to change the Developer from CurD to NewD will be levied as per new brand onboarding.</li>
+                    </ul>
+                    <h2 class="font-size-18 font-weight-600 margin-top-35">8. Functionality for Agents</h2>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>8.1 Opt-in Functionality</strong></h4>
+                    <p class="margin-top-25 margin-left-35">Opt-in is the process of getting consent from Users before sending them messages.</p>
+                    <p class="margin-top-25 margin-left-35">When submitting an agent for verification, the Developers must provide information indicating how the business gets the opt-in from the End Users. This could be via a paper form, an online form, registration, or sign-in, wherein the End User explicitly accepts terms of service which includes the clauses for receiving information from the Enterprise and/or the Brand.</p>
+                    <p class="margin-top-25 margin-left-35">Here are some examples of what you can submit as a proof of Opt-in from the user</p>
+                    <ol type="a" class="margin-top-25 margin-left-35">
+                        <li class="margin-top-20">Online Registration where user explicitly accepts the clause for receiving communication from the business.</li>
+                        <li class="margin-top-20">Offline form filled by users of the brand having opt-in information.</li>
+                        <p class="margin-top-15"><strong>Note:</strong></p>
+                        <ol type="i">
+                            <li class="margin-top-20">If you as a Brand already have an opt-in for sending SMS messages, it counts as an Opt-in for RCS. Just share the details of the process of getting SMS Opt-in from the users. </li>
+                            <li class="margin-top-20">If you as a Brand already have an opt-in for sending WhatsApp message, it does NOT count as an Opt-in for RCS.</li>
+                        </ol>
+                    </ol>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>8.2 Opt-out Functionality</strong></h4>
+                    <p class="margin-top-20 margin-left-35">All agents must comply with an End User’s request to opt-out (e.g., by sending “STOP” message or equivalent in Agent’s language) and be able to promptly process and adhere to the End Users’ request to opt-out. Developers must implement an opt out functionality in the Agent. This should be explicitly shown in the Agent’s flow. Once the user selects opt-out he should not receive any further A2P messages from the Agent.</p>
+                    <p class="margin-top-20 margin-left-35">The keyword used for Opt-out is to be provided by Developers as part of the verification process. “STOP” and any additional keywords supported for Opt-out should be included when submitting the Agent for verification. </p>
+                    <p class="margin-top-20 margin-left-35">The VinCam-RBM team platform also provides help for implementing Stop. The default keyword to opt-out is STOP. The default keyword to cancel the opt-out is START.</p>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>8.3 P2A Response Functionality</strong></h4>
+                    <p class="margin-top-20 margin-left-35">It is recommended that Developers implement functionality to respond to P2A messages from End Users, wherein the Agent responds to certain keywords, e.g., HI, START, MENU, HELP. Responding to P2A messages is optional. If a response to P2A messages is supported, a response to the keyword “HI” is required. Support for other keywords is optional.</p>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>8.4 Other Functionality</strong></h4>
+                    <p class="margin-top-20 margin-left-35">Developers should also implement standard commands like RESTART and HELP/MENU. Agents should support restarting of conversations by welcoming the End User with an initial message that lists the standard commands and options End Users can choose to take the conversation forward. These are optional.</p>
+                    <h2 class="font-size-18 font-weight-600 margin-top-35">9. Privacy and Security Guidelines</h2>
+                    <ul>
+                        <li class="margin-top-15">VinCam-RBM team and ViBSL wants users to trust that data about them will be respected and handled with appropriate care.</li>
+                        <li class="margin-top-15">All Agents using RBM must be transparent in how they handle End User data (e.g., information provided by an End User, collected about a user or user’s device).</li>
+                        <li class="margin-top-15">The Agents must provide a link to their privacy policy and comprehensively disclose how their Agent collects, uses, and shares user data, including the types of parties with whom it’s shared.</li>
+                        <li class="margin-top-15">The Agents must limit their data collection and use to the activities required to provide the services offered by the Agent, and as described in the Agent’s Privacy Policy.</li>
+                        <li class="margin-top-15">Please note that we prohibit the collection and use of sensitive personal and confidential information over RCDS, such as Permanent Account Number (PAN) or Aadhaar card number, payment, and financial data (e.g., credit card and bank account numbers), log-in credentials, passwords, or answers to security questions.</li>
+                        <li class="margin-top-15">When Agents are sending such information, they must appropriately obfuscate or mask it (e.g., only displaying the last 4 digits of a credit card number).</li>
+                        <li class="margin-top-15">Do not use any information about the End User’s online or offline state for any reason except to directly provide the services to the user, and under no circumstances in a manner that may surprise or disturb an End User (including, but not limited to, sending a promotion or advertisement based on them coming back online).</li>
+                        <li class="margin-top-15">Using or sharing user data without specific End User consent for the specific use of that data is strictly prohibited.</li>
+                    </ul>
+                    <h2 class="font-size-18 font-weight-600 margin-top-35">10. Content and Activities Guidelines</h2>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>10.1 Illegal content and activities </strong></h4>
+                    <ul class="margin-left-35">
+                        <li class="margin-top-15">Keep it legal. Agents, users and third parties are prohibited from using RBM to engage in illegal activities or facilitate the purchases or sales of any illegal products and services.</li>
+                        <li class="margin-top-15">Examples include but are not limited to: child sexual abuse imagery, sales of human organs, sales of animal and regulated species, human trafficking activities, and terrorist content.</li>
+                        <li class="margin-top-15">It is your responsibility to comply with the applicable laws and regulations in India.</li>
+                    </ul>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>10.2 Spam</strong></h4>
+                    <p class="margin-left-35">To ensure that you do not spam or facilitate transmission of spam, please follow the guidelines below:</p>
+                    <ul class="margin-left-35">
+                        <li class="margin-top-15">Ensure that you only communicate with users who have explicitly opted into receiving your messages. If the user has opted in to receive SMS messages, it also counts as an opt-in for RCS.</li>
+                        <li class="margin-top-15">Do not send unsolicited content, or aggressively message users.</li>
+                        <li class="margin-top-15">A Brand is allowed to send a maximum of 4 A2P promotional messages per user per month. The limit of 4 promotional messages per user per month per Brand is across all promotional Agents of the brand. Please see Section 3.8 for details.</li>
+                        <li class="margin-top-15">Do not sell, purchase, exchange, or distribute End User phone numbers to a third party, without consent from the End User</li>
+                        <li class="margin-top-15">Abide by any applicable local regulations, such as specific opt-in requirements before messaging mobile subscribers, record keeping and opt-out requirements.</li>
+                    </ul>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>10.3 Abuse of the product</strong></h4>
+                    <p class="margin-left-35 margin-top-15">Do not misuse RBM. We want RBM to be useful, relevant, and safe for users, thus we do not allow the following:</p>
+                    <ul class="margin-left-35">
+                        <li class="margin-top-15">Phishing scams</li>
+                        <li class="margin-top-15">Attempting to trick other users or third parties for unfair advantages or financial gains</li>
+                        <li class="margin-top-15">Circumvent the promotional limit of 4 messages per user per Brand per month by creating fake brands.</li>
+                        <li class="margin-top-15">Content or behavior that circumvents, harms, or interferes with the operation of other agents, RBM networks, servers, or other infrastructure.</li>
+                        <li class="margin-top-15">Distribution of malicious or unwanted software.</li>
+                    </ul>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>10.4 Misrepresentation and Impersonation </strong></h4>
+                    <p class="margin-left-35 margin-top-15">Users should not feel misled by RBM content, and that means Agents should be upfront, honest, and provide them with the information that they need to make informed decisions. RBM content must not represent you or your products or services in a way that is not accurate, realistic, and truthful. For example, the Agents must not:</p>
+                    <ul class="margin-left-35">
+                        <li class="margin-top-15">Be misleading (e.g., making false statement about the business or qualification, falsely affiliating with other individuals, organizations, products, and services, or making false claims which position improbable results as likely outcomes even if they are technically feasible).</li>
+                        <li class="margin-top-15">Conceal or misstate information about the business, product, or service (e.g., using a false or fictitious identity, business name or contact information, offers for products or services that are normally offered for free).</li>
+                        <li class="margin-top-15">Contain information which is not clearly relevant to the actual product or service of the Agent.</li>
+                        <li class="margin-top-15">Fail to disclose the payment model and full expense that a user will bear (e.g., shipping costs and other billing related information, recurring subscription costs).</li>
+                        <li class="margin-top-15">Prompt users to initiate a purchase, download, or other commitment without first providing all relevant information and obtaining the user’s explicit consent.</li>
+                        <li class="margin-top-15">Feature content that is provably false and could significantly undermine participation or trust in civic, electoral, or democratic processes such as census participation or public voting procedures.</li>
+                    </ul>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>10.5 Profanity and inappropriate language </strong></h4>
+                    <p class="margin-left-35 margin-top-15">Don’t use obscene, profane, or offensive language, or nonsensical content that carries no actual meaning.</p>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>10.6 Editorial and technical requirements</strong></h4>
+                    <p class="margin-left-35 margin-top-15">To facilitate high quality user experiences, do ensure that your content conforms with the editorial and professional standards as follow:</p>
+                    <ul class="margin-left-35">
+                        <li class="margin-top-15">Grammar, spelling and spacing: all business content must use commonly accepted spelling, basic grammar and be written in logical sentence form.</li>
+                        <li class="margin-top-15">Symbols: no excessive use of numbers, letters, punctuation marks or emoticons.</li>
+                        <li class="margin-top-15">Capitalization: business content must not contain excessive or incorrect capitalization.</li>
+                        <li class="margin-top-15">Gimmicky text: business content must avoid repetition of words, phrases and punctuation, and should not include any unnecessary or irrelevant text.</li>
+                        <li class="margin-top-15">Image and video quality: image and video should not be low quality, unclear, appear sideways or upside downs.</li>
+                        <li class="margin-top-15">Opt-out Keyword: STOP, plus any others of your liking.</li>
+                        <li class="margin-top-15">P2A Conversation Keyword: Hi, plus any others of your liking.</li>
+                    </ul>
+                    <h2 class="font-size-18 font-weight-600 margin-top-35">11. Content policies </h2>
+                    <p class="margin-top-15 padding-left-20">Our content policies are categorized into two groups: Prohibited content and Restricted content.</p>
+                    <p class="margin-top-15 padding-left-20">We forbid businesses that operate, feature, or involve with Prohibited content.</p>
+                    <p class="margin-top-15 padding-left-20">You may not a) exclusively promote products or services in Restricted Content areas or (b) send promotional updates, advertisement, or commercial content that exclusively promote the Restricted content using RBM. You may promote products or services in Restricted content areas using RBM if such promotion takes place as part of promoting a wider set of products or services. Always remember to comply with your local laws and regulations.</p>
+                    <p class="margin-top-15 padding-left-20">You may send OTPs for companies dealing with Restricted content and have conversational agents that respond to user-initiated messages.</p>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>11.1 Prohibited content</strong></h4>
+                    <p class="margin-left-35 margin-top-15">RBM does not support unlawful, offensive, or inappropriate content. This is a non-exhaustive list of content we do not allow:</p>
+                    <ul class="margin-left-35">
+                        <li class="margin-top-15"><strong>Counterfeit goods</strong> - Products described as knock off, replica, imitation, clone, faux, fake, mirror image, or similar terms when referring to a brand name to pass themselves off as genuine products of the brand owner.</li>
+                        <li class="margin-top-15"><strong>Dangerous products or services</strong> - Products or services that cause damage, harm, or injury. These include, but are not limited to, recreational drugs, instructional content, or equipment to facilitate drug use, explosive materials, fireworks, weapons, instructions for making explosives or other harmful products.</li>
+                        <li class="margin-top-15"><strong>Products or services that enable dishonest behaviors</strong> - Products, services or content that help users to mislead others such as fake documents, aids to pass drug tests, paper-writing or exam taking services; Products, services or instruction that enable unauthorized access to systems, devices, or property.</li>
+                        <li class="margin-top-15"><strong>Dangerous or derogatory content</strong> - Content, products, or services that:</li>
+                        <ul type="disc">
+                            <li class="margin-top-15">Incite hatred against, promote discrimination of, or disparage an individual or group based on their race or ethnic origin, religion, disability, age, nationality, veteran status, sexual orientation, gender, gender identity, or other characteristic that is associated with systemic discrimination or marginalization. </li>
+                            <li class="margin-top-15">Harass, intimidate, or bully an individual or group of individuals.</li>
+                            <li class="margin-top-15">Threaten or advocate for harm on oneself or others.</li>
+                            <li class="margin-top-15">Seek to exploit others (e.g., blackmail, soliciting or promoting dowries).</li>
+                            <li class="margin-top-15">Inappropriate use of flags, national emblems, or religious icons and imagery.</li>
+                        </ul>
+                        <li class="margin-top-15"><strong>Shocking content</strong> - Content, products, or services that:</li>
+                        <ul type="disc">
+                            <li class="margin-top-15">Contain violent language, gruesome or disgusting imagery, or graphic images or accounts of physical trauma.</li>
+                            <li class="margin-top-15">Contain gratuitous portrayal of bodily fluids or waste.</li>
+                            <li class="margin-top-15">Contain obscene or profane language.</li>
+                            <li class="margin-top-15">Likely cause shock, scare or disgust</li>
+                        </ul>
+                        <li class="margin-top-15"><strong>Capitalizing on sensitive events</strong> - Content which may be deemed as capitalizing on or lacking reasonable sensitivity towards a natural disaster, conflict, death, or other tragic event with no discernible benefit to the victims.</li>
+                        <li class="margin-top-15"><strong>Animal cruelty</strong> - Content that promotes or depicts cruelty or gratuitous violence towards animals, or which may be interpreted as trading in or selling products derived from threatened or extinct species.</li>
+                        <li class="margin-top-15"><strong>Adult content</strong> - Content, products or services that are sexually explicit, sexually suggestive, or promote sexual themes, activities, or escort services. Content promoting the sexual exploitation of minors, such as child sexual abuse imagery, is strictly prohibited.</li>
+                        <li class="margin-top-15"><strong>Tobacco</strong> - Content, products or services that promote sales or consumption of tobacco, products containing tobacco, component parts of tobacco or products designed to simulate smoking behaviors.</li>
+                        <li class="margin-top-15"><strong>Political Content</strong> - Business to consumer messages may not include content or services related to political campaigns such as those that promote or undermine a political figure or party, conduct opinion polls or political surveys, discuss election integrity, or predict election results. Any other political content that is not prohibited by this policy must comply with local laws and regulations.</li>
+                        <li class="margin-top-15"><strong>Hate and Violence</strong> – Content or services promoting hate, violence, or intolerance based on race, age, gender, gender identity, ethnicity, religion, or sexual orientation. </li>
+                        <li class="margin-top-15"><strong>Unauthorized content</strong> – Content, products, or services that are unauthorized to use copyrighted or trademarked content, or other legally prohibited content.</li>
+                        <li class="margin-top-15"><strong>Firearms, weapons, or ammunition</strong> - Content, products or services that promote weapons or other ammunitions</li>
+                    </ul>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>11.2 Restricted content </strong></h4>
+                    <p class="margin-left-35 margin-top-15">Agents cannot send advertisements, or promotional content that are related to restricted content. OTP and Transactional messages related to restricted content can be sent. Agents are allowed to respond to P2A messages that relate to restricted content, provided it is clear to the user that restricted content will be sent. Below is a non-exhaustive list of restricted content categories:</p>
+                    <ul class="margin-left-35" type="disc">
+                        <li class="margin-top-15"><strong>Alcohol</strong> - Content, products or services that promote branding, sales, promotion, or consumption of alcoholic beverages. Content that promotes irresponsible alcohol consumption is prohibited. </li>
+                        <li class="margin-top-15"><strong>Gambling and games</strong> - Gambling related content, products, or services, which include but are not limited to legal gambling activities such as: physical casinos, offline and online gambling activities, national or private lottery, promotional offers for gambling sites, and social casino games.</li>
+                        <li class="margin-top-15"><strong>Healthcare related products and services</strong> - Content, products, or services that promote branding or sales of prescription drugs, over-the-counter medicines, medical suppliers, online pharmacy, HIV home test, abortion, birth control products, and miracle cures products or services.</li>
+                    </ul>
+                    <h2 class="font-size-18 font-weight-600 margin-top-35">12. Violation of Guidelines</h2>
+                    <p class="margin-top-15 padding-left-20">Depending on how egregious a violation is, VinCam-RBM team and ViBSL may respond in several different ways. Below is a list of various ways we enforce policies.</p>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>12.1 Pre-Launch - Agent Submission Rejection</strong></h4>
+                    <p class="margin-left-35 margin-top-15">VinCam-RBM team verifies all Agent details when the developer submits agents for launch. The request for launch is rejected if the Agent violates any of the requirements and the Developer is notified over email.</p>
+                    <p class="margin-left-35 margin-top-15">Developers can resubmit the Agent for launch once the problem is fixed.</p>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>12.2 Post-Launch - Services suspension </strong></h4>
+                    <p class="margin-left-35 margin-top-15">VinCam-RBM team may suspend RBM services on Launched Agents that violate RBM policies. This means that the Agents can no longer use RBM services until the problem is fixed and passed a policy review.</p>
+                    <h4 class="margin-top-30 margin-left-35 font-size-16"><strong>12.3 Account suspension</strong></h4>
+                    <p class="margin-left-35 margin-top-15">We may suspend your account if you have several violations or a serious violation. If this happens, all Agents from your account will be disabled. Any related accounts, including your new account, may be automatically suspended. We may report any illegal activity if required by law.</p>
+                    <h2 class="font-size-18 font-weight-600 margin-top-35">13. Verification Process</h2>
+                    <p class="margin-top-15 padding-left-20">The Agent should be submitted for verification and launch by the Developer upon successful completion of the testing of the Agent. As part of verification, we check the following:</p>
+                    <ul class="margin-left-25">
+                        <li class="margin-top-15">Agent Name submitted is Unique. </li>
+                        <li class="margin-top-15">Brand Verification: The Brand Point of Contact (POC) domain matches the domains included in the Agent Assets (primary domain, privacy policy domain, terms of service domain)</li>
+                        <li class="margin-top-15">The Bot branding matches the web branding of the Brand.</li>
+                        <li class="margin-top-15">Agent should comply to the Policy Guidelines outlined in this document.</li>
+                        <li class="margin-top-15">Opt-in – Brand has obtained the opt-in from targeted End Users</li>
+                        <li class="margin-top-15">Opt-out – The agent acknowledges and respects the End User’s request for opt-out</li>
+                        <li class="margin-top-15">Agent Use Case – The Agent Use Aase should be appropriately configured according to the definitions of the Agent Use Cases</li>
+                        <li class="margin-top-15">A confirmation response by email (Reply ALL) from the point of contact at the Brand to the verification email, as per the Brand Verification Email template outlined below.</li>
+                    </ul>
+                    <h2 class="font-size-20 font-weight-600 margin-top-40">Brand Verification Email (Letter of Authorization (LOA)</h2>
+                    <p class="margin-top-25">Subject: <strong>VinCam-RBM:</strong> Please approve brand use for RCS Business Messaging </p>
+                    <p>To: [<strong>BRAND POC</strong>]</p>
+                    <p>Hi [<strong>BRAND POC</strong>],</p>
+                    <p class="margin-top-25">[DEVELOPER] has registered an RCS Business Messaging (RBM) agent with VinCam-RBM on behalf of your company. Registration allows [DEVELOPER] to send messages on behalf of your company to users that are reachable from ViBSL RBM Platform.</p>
+                    <p class="margin-top-25">We have received a request from [DEVELOPER] to launch this agent, which has the following information:</p>
+                    <p class="margin-top-25">Agent name: [<strong>AGENT NAME</strong>] <br>Agent logo: [<strong>AGENT LOGO URL</strong>] <br>Agent hero image: [<strong>AGENT HERO IMAGE URL</strong>] <br>Agent description: [<strong>AGENT DESCRIPTION</strong>] <br>Contact Person at [<strong>DEVELOPER</strong>] :<br>Terms of service: [<strong>TOS URL</strong>] <br>Privacy policy: [<strong>PRIVACY POLICY URL</strong>] <br>Agent ID: [<strong>AGENT ID</strong>]</p>
+                    <p class="margin-top-35">Your approval is required in order to </p>
+                    <p>(a) validate the correctness of the information above, and </p>
+                    <p>(b) confirm that [DEVELOPER] has the right to control an RBM agent that represents your brand. We would like to obtain your approval to continue the launch.</p>
+                    <p class="margin-top-25">To grant your approval, respond with the following: “I, [BRAND POC] as a company representative, grant [DEVELOPER] the right to operate an RCS Business Messaging agent using the information specified in this email.”</p>
+                    <p>Feel free to reach out to us at <a href="mailto: rbm-verification@virbm.in" rel="noreferrer noopener" target="_blank" class="font-weight-600 link-purple">rbm-verification@virbm.in</a>for any queries!</p>
+                    <p class="margin-top-40">Thanks,</p>
+                    <p>THE ViRBM TEAM</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br/><br/>
+</div>
+{% endblock %}

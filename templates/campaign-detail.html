@@ -1,0 +1,239 @@
+{% extends "brand-layout.html" %}
+{% block content %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+.chart-container {
+    width: 100%;
+    margin: auto;
+    margin-bottom: 50px;
+}
+</style>
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">Manage Campaigns /</span> Campaign Details</h4>
+<div class="row">
+    <div class="col-lg-4 col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <div class="smartphone">
+                    {% if template.template_type == "text" %}
+                        <div class="preview">
+                            <div class="content">
+                                <div class="text">{{ content.agentContentMessage.text  }}</div>
+                                <div class="suggestions">
+                                    {% for suggestion in content.agentContentMessage.suggestions %}
+                                        <a href="javascript: void(0)">
+                                            {% if "action" in suggestion and "openUrlAction" in suggestion.action %}
+                                                <i class="bx bx-link"></i> {{ suggestion['action']['text'] }}
+                                            {% endif %}
+                                            {% if "action" in suggestion and "dialAction" in suggestion.action %}
+                                                <i class="bx bx-phone"></i> {{ suggestion['action']['text'] }}
+                                            {% endif %}
+                                            {% if "reply" in suggestion %}
+                                                <i class="bx bx-reply"></i> {{ suggestion['reply']['text'] }}
+                                            {% endif %}
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if template.template_type == "rich" %}
+                        <div class="preview {{ content.agentContentMessage.richCard.standaloneCard.cardOrientation  }} {{ content.agentContentMessage.richCard.standaloneCard.thumbnailImageAlignment  }}">
+                            <div class="image {{ content.agentContentMessage.richCard.standaloneCard.cardContent.media.height  }}">
+                                <img src="{{ content.agentContentMessage.richCard.standaloneCard.cardContent.media.contentInfo.fileUrl  }}"/>
+                            </div>
+                            <div class="content">
+                                <div class="title">{{ content.agentContentMessage.richCard.standaloneCard.cardContent.title  }}</div>
+                                <div class="description">{{ content.agentContentMessage.richCard.standaloneCard.cardContent.description  }}</div>
+                                <div class="suggestions">
+                                    {% for suggestion in content.agentContentMessage.richCard.standaloneCard.cardContent.suggestions %}
+                                        <a href="javascript: void(0)">
+                                            {% if "action" in suggestion and "openUrlAction" in suggestion.action %}
+                                                <i class="bx bx-link"></i> {{ suggestion['action']['text'] }}
+                                            {% endif %}
+                                            {% if "action" in suggestion and "dialAction" in suggestion.action %}
+                                                <i class="bx bx-phone"></i> {{ suggestion['action']['text'] }}
+                                            {% endif %}
+                                            {% if "reply" in suggestion %}
+                                                <i class="bx bx-reply"></i> {{ suggestion['reply']['text'] }}
+                                            {% endif %}
+                                        </a>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                    {% if template.template_type == "richCarousel" %}
+                    <div id="richCardCarousel" class="carousel slide carousel-dark ">
+                        <div class="carousel-inner {{content.agentContentMessage.richCard.carouselCard.cardWidth}}">
+                            {% for card in content.agentContentMessage.richCard.carouselCard.cardContents %}
+                            <div class="carousel-item"> 
+                                <div class="preview rich-carousel">
+                                    <div class="image {{ card.media.height  }}">
+                                        <img src="{{ card.media.contentInfo.fileUrl  }}"/>
+                                    </div>
+                                    <div class="content">
+                                        <div class="description">{{ card.title  }}</div>
+                                        <div class="suggestions">
+                                            {% for suggestion in card.suggestions %}
+                                                <a href="javascript: void(0)">
+                                                    {% if "action" in suggestion and "openUrlAction" in suggestion.action %}
+                                                        <i class="bx bx-link"></i> {{ suggestion['action']['text'] }}
+                                                    {% endif %}
+                                                    {% if "action" in suggestion and "dialAction" in suggestion.action %}
+                                                        <i class="bx bx-phone"></i> {{ suggestion['action']['text'] }}
+                                                    {% endif %}
+                                                    {% if "reply" in suggestion %}
+                                                        <i class="bx bx-reply"></i> {{ suggestion['reply']['text'] }}
+                                                    {% endif %}
+                                                </a>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <a class="carousel-control-prev" href="#richCardCarousel" role="button" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </a>
+                            <a class="carousel-control-next" href="#richCardCarousel" role="button" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </a>
+                        </div>
+                    </div>
+                {% endif %}
+                </div>
+                <br>
+                <form class="campaign-template-form" method="post" action="/update_campaign_status">
+                    <div class="mb-3">
+                        {% if campaign.status == "Created" or campaign.status == "Running" %}
+                            <button type="submit" class="btn btn-primary" name="action" value="Paused">Pause Campaign</button>
+                        {% elif campaign.status == "Paused" %}
+                            <button type="submit" class="btn btn-primary" name="action" value="Start">Start Campaign</button>
+                        {% endif %}
+                            <button type="submit" class="btn btn-primary" name="action" value="update_leads">Update Leads</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-8 mb-4">
+        <div class="row">
+            <div class="col-lg-6 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Delivery Rate</h3>
+                        <canvas id="deliveryRateChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Open Rate</h3>
+                        <canvas id="openRateChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="row">
+            <div class="col-lg-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Bounce Rate</h3>
+                        <canvas id="bounceRateChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Blacklist Rate</h3>
+                        <canvas id="blacklistRateChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h3>Sent to Read Ratio</h3>
+                        <canvas id="sentToReadRatioChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<script src="../static/js/libs/jquery/jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $('.carousel').carousel({ interval: 1000, cycle: true });
+        $('.carousel-item').first().addClass('active');
+    });
+</script>
+
+<script>
+    var deliveryRate = {{ campaign_metrics['delivery_rate'] | tojson }};
+    var openRate = {{ campaign_metrics['open_rate'] | tojson }};
+    var bounceRate = {{ campaign_metrics['bounce_rate'] | tojson }};
+    var blacklistRate = {{ campaign_metrics['blacklist_rate'] | tojson }};
+    var sentToReadRatio = {{ campaign_metrics['sent_to_read_ratio'] | tojson }};
+
+    // Function to create a chart
+    function createChart(chartId, label, data, backgroundColor, borderColor) {
+        var ctx = document.getElementById(chartId).getContext('2d'),
+            type = "";
+
+        if(chartId == "deliveryRateChart"){
+            type ="bar";
+        }
+        if(chartId == "openRateChart"){
+            type ="bar";
+        }
+        if(chartId == "bounceRateChart"){
+            type ="pie";
+        }
+        if(chartId == "blacklistRateChart"){
+            type ="doughnut";
+        }
+        if(chartId == "sentToReadRatioChart"){
+            type ="pie";
+        }
+
+        return new Chart(ctx, {
+            type: type,
+            data: {
+                labels: ['Metric'], // Single label as we have only one data point per chart
+                datasets: [{
+                    label: label,
+                    data: [data], // Wrap the single value in an array
+                    backgroundColor: backgroundColor,
+                    borderColor: borderColor,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                }
+            }
+        });
+    }
+
+    // Initialize all charts
+    createChart('deliveryRateChart', 'Delivery Rate (%)', deliveryRate, 'rgba(54, 162, 235, 0.2)', 'rgba(54, 162, 235, 1)');
+    createChart('openRateChart', 'Open Rate (%)', openRate, 'rgba(75, 192, 192, 0.2)', 'rgba(75, 192, 192, 1)');
+    createChart('bounceRateChart', 'Bounce Rate (%)', bounceRate, 'rgba(255, 99, 132, 0.2)', 'rgba(255, 99, 132, 1)');
+    createChart('blacklistRateChart', 'Blacklist Rate (%)', blacklistRate, 'rgba(255, 206, 86, 0.2)', 'rgba(255, 206, 86, 1)');
+    createChart('sentToReadRatioChart', 'Sent to Read Ratio', sentToReadRatio, 'rgba(153, 102, 255, 0.2)', 'rgba(153, 102, 255, 1)');
+</script>
+{% endblock %}

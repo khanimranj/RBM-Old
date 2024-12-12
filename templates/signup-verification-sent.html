@@ -1,0 +1,21 @@
+{% extends "static-layout.html" %}
+{% block content %}
+
+<div class="container-xxl">
+    <div class="authentication-wrapper authentication-basic container-p-y">
+      <div class="authentication-inner">
+        <h3 class="mb-2">Verification Email!</h3>
+        <p class="mb-4">We have sent you a verification email!</p>
+        <br>
+        <p class="mb-4">Please click on the link in your email to verify your login.</p>
+        <p class="mb-4">
+          <div class="mb-3">
+            <a class="btn btn-primary" href="javascript:void(0);">Ok</a><br><br>
+            <a href="/signup-verification-success" target="_blank">Check Success Page</a>
+          </div>
+        </p>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

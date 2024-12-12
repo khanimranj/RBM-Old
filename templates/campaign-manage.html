@@ -1,0 +1,84 @@
+{% extends "brand-layout.html" %}
+{% block content %}
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">Manage Campaigns</h4>
+<div class="card">
+    <h5 class="card-header"></h5>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12 col-md-12 d-flex justify-content-center justify-content-md-end">
+                <div class="dataTables_filter">
+                    <label>Search: <input type="search" class="form-control" placeholder=""></label>
+                </div>
+            </div>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Campaign ID</th>
+                    <th>Name</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="table-border-bottom-0">
+                {% for campaign in campaigns %}
+                <tr class="table-default">
+                    <td>{{ campaign.campaign_id }}</td>
+                    <td>{{ campaign.name }}</td>
+                    <td>{{ campaign.start_date }}</td>
+                    <td>{{ campaign.end_date }}</td>
+                    <td>{{ campaign.status }}</td>
+                    <td>
+                        <a  class="btn btn-primary" href="{{ url_for('view_campaign', campaign_id=campaign.campaign_id) }}">View</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table><br>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 d-flex justify-content-center justify-content-md-end">
+              <div class="dataTables_paginate paging_simple_numbers">
+                <ul class="pagination">
+                    {% if campaigns.prev_num and campaigns.prev_num != 1 and campaigns.pages > 1 %}
+                        <li class="paginate_button page-item">
+                            <a href="?page=1" class="page-link">First</a>
+                        </li>
+                        <li class="paginate_button page-item">
+                            <a href="?page={{ campaigns.prev_num }}" class="page-link">Previous</a>
+                        </li>
+                    {% endif %}
+                    {% for page_num in campaigns.iter_pages() %}
+                        {% if page_num %}
+                            {% if campaigns.page == page_num %}
+                                <li class="paginate_button page-item active">
+                                    <span class="current page-link">{{ page_num }}</span>
+                                </li>
+                            {% else %}
+                                <li class="paginate_button page-item">
+                                    <a href="?page={{ page_num }}" class="page-link">{{ page_num }}</a>
+                                </li>
+                            {% endif %}
+                        {% else %}
+                            <li class="paginate_button page-item">
+                                <span class="ellipsis page-link">...</span>
+                            </li>
+                        {% endif %}
+                        </li>
+                    {% endfor %}
+                    {% if campaigns.next_num and campaigns.next_num <= campaigns.pages %}
+                        <li class="paginate_button page-item">
+                            <a href="?page={{ campaigns.next_num }}" class="page-link">Next</a>
+                        </li>
+                        <li class="paginate_button page-item">
+                            <a href="?page={{ campaigns.pages }}" class="page-link">Last</a>
+                        </li>
+                    {% endif %}
+                </ul>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

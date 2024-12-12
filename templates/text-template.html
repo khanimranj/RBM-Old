@@ -1,0 +1,236 @@
+{% extends "brand-layout.html" %}
+{% block content %}
+<h4 class="py-3 mb-4"><span class="text-muted fw-light">Create Template /</span> Text Template</h4>
+<div class="row">
+    <div class="col-md-6 col-lg-6 mb-6">
+        <div class="card">
+            <h5 class="card-header">Create a New Text Template</h5>
+            <div class="card-body">
+                <form>
+                    <div class="mb-3">
+                      <label class="form-label" for="typeSelect">Choose Type</label>
+                      <select id="typeSelect" class="form-control" name="type">
+                            <option value="OTP">OTP</option>
+                            <option value="Transactional">Transactional</option>
+                            <option value="Promotion">Promotion</option>
+                      <select>
+                    </div>
+                    <div class="mb-3">
+                      <label class="form-label" for="basic-default-company">Company</label>
+                      <textarea name="txtName" id="txtName" class="form-control" placeholder="Enter Text Here" wrap="soft"></textarea>
+                    </div>
+                    <div class="d-flex justify-content-between flex-column flex-sm-row">
+                        <div class="variable-info">Variables: <span id="variable-count">0</span>/10</div>
+                        <div class="add-btn">
+                            <button type="button" class="btn btn-outline-secondary act_btn" id="addVariable"><i class="fa-solid fa-plus"></i> Add Variable</button>
+                            <button type="button" class="btn btn-outline-secondary act_btn add"><i class="fa-solid fa-plus"></i> Add Suggestions</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="main-select">
+                </div>
+                <br>
+                <div class="mb-3">
+                    <button type="button" class="btn btn-primary" id="submitBtn">Submit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-6 mb-6">
+        <div class="smartphone">
+            <div class="preview txt">
+                <div class="text"></div>
+                <div class="suggestions"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .url-select, .phone-no-select {
+        display: none;
+    }
+</style>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+    var rowHtml = `<br><div class='suggestion-box'>
+                        <div class="row">
+                            <div class="input-group">
+                                <select id='select_type' class='form-select' placeholder='Type of Action'>
+                                    <option value='1'>Reply</option>
+                                    <option value='2'>URL Action</option>
+                                    <option value='3'>Dialer Action</option>
+                                </select>
+                                <input type='text' name='text' class='form-control' placeholder='Suggestion Text' />
+                                <input type='text' name='Postback' class='form-control' placeholder='Suggestion Postback' />
+                                <input type='text' name='url' class='form-control url-select' placeholder='URL/URI to open' />
+                                <input type='number' name='phone-no' class='form-control phone-no-select' placeholder='Phone Number to Dial' />
+                                <button type="button" class="btn btn-primary remove"><i class="bx bx-x"></i>  </button>
+                            </div>
+                        </div>
+                    </div>`;
+    var counter = 0;
+    updatePreview();
+    $('#addVariable').click(function() {
+        var textArea = $('#txtName');
+        var content = textArea.val();
+        var variableCount = (content.match(/\[.*?\]/g) || []).length;
+
+        if (variableCount < 10) {
+            textArea.val(content + '[variable' + (variableCount + 1) + ']');
+            updateVariableCount();
+        } else {
+            alert('Maximum number of variables reached.');
+        }
+    });
+
+
+    $(".add").click(function() {
+        if (counter < 3) {
+            $('.main-select').append(rowHtml);
+            counter++;
+        }
+    });
+
+    $(document).on('click', '.remove', function() {
+        $(this).closest('.suggestion-box').remove();
+        counter--;
+    });
+
+    $(document).on('change', '#select_type', function(e) {
+        var dropVal = $(this).val();
+        if (dropVal === '1') {
+            $(this).closest('.suggestion-box').find('.url-select').hide();
+            $(this).closest('.suggestion-box').find('.phone-no-select').hide();
+        }
+        if (dropVal === '2') {
+            $(this).closest('.suggestion-box').find('.url-select').show();
+            $(this).closest('.suggestion-box').find('.phone-no-select').hide();
+        }
+        if (dropVal === '3') {
+            $(this).closest('.suggestion-box').find('.url-select').hide();
+            $(this).closest('.suggestion-box').find('.phone-no-select').show();
+        }
+    });
+
+    function updatePreview() {
+        // Update the main text
+        var mainText = $("#txtName").val();
+        $(".smartphone .preview .text").text(mainText);
+
+        // Update the suggestions
+        var suggestionsHtml = '';
+        $('.suggestion-box').each(function() {
+            var typeOfAction = $(this).find('select[id="select_type"]').val();
+            var text = $(this).find('input[name="text"]').val();
+            if (typeOfAction === '1') {
+                suggestionsHtml += '<a href="javascript: void(0)"><i class="bx bx-reply"></i>  ' + text + '</a>';
+            } else if (typeOfAction === '2') {
+                suggestionsHtml += '<a href="javascript: void(0)"><i class="bx bx-link"></i>  ' + text + '</a>';
+            } else if (typeOfAction === '3') {
+                suggestionsHtml += '<a href="javascript: void(0)"><i class="bx bx-phone"></i>  ' + text + '</a>';
+            }
+        });
+
+        $(".smartphone .preview .suggestions").html(suggestionsHtml);
+    }
+
+    function updateVariableCount() {
+        var content = $('#txtName').val();
+        var variableCount = (content.match(/\[.*?\]/g) || []).length;
+        $('#variable-count').text(variableCount);
+    }
+
+    // Call the updatePreview function whenever the text or suggestions are modified
+    $('#txtName').on('input', updateVariableCount);
+    $("#txtName").on('input', updatePreview);
+    $(document).on('input', '.suggestion-box input', updatePreview);
+    $(document).on('change', '.suggestion-box select', updatePreview);
+
+    function validateForm() {
+        var isValid = true;
+        var txtNameValue = $("#txtName").val().trim();
+        if (txtNameValue === "") {
+            alert('Text Field cannot be blank');
+            isValid = false;
+        }
+
+        // Loop through each suggestion box to validate
+        $('.suggestion-box').each(function() {
+            var typeOfAction = $(this).find('select[id="select_type"]').val();
+            var text = $(this).find('input[name="text"]').val();
+            var postback = $(this).find('input[name="Postback"]').val();
+
+            // Check for empty text and postback
+            if (!text || !postback) {
+                alert('Suggestion Text and Suggestion Postback cannot be empty');
+                isValid = false;
+                return false; // Exit loop
+            }
+
+            if (typeOfAction === '2') {
+                var url = $(this).find('input[name="url"]').val();
+                if (!url || !url.startsWith('http://') && !url.startsWith('https://')) {
+                    alert('URL/URI to open cannot be empty and must start with http:// or https://');
+                    isValid = false;
+                    return false; // Exit loop
+                }
+            }
+
+            if (typeOfAction === '3') {
+                var phoneNo = $(this).find('input[name="phone-no"]').val();
+                if (!phoneNo || phoneNo.length < 12) {
+                    alert('Phone Number to Dial cannot be empty and must be at least 10 digits');
+                    isValid = false;
+                    return false; // Exit loop
+                }
+            }
+        });
+
+        return isValid;
+    }
+
+    $("#submitBtn").click(function() {
+        if (!validateForm()) {
+            return false;
+        }
+        var formData = {
+            txtName: $("#txtName").val(), // Capture the value of txtName
+            typeSelect: $("#typeSelect").val(),
+            suggestions: []
+        };
+
+        $('.suggestion-box').each(function() {
+            var row = {};
+            row.typeOfAction = $(this).find('select[id="select_type"]').val();
+            row.text = $(this).find('input[name="text"]').val();
+            row.postback = $(this).find('input[name="Postback"]').val();
+            if (row.typeOfAction === '2') {
+                row.url = $(this).find('input[name="url"]').val();
+            } else if (row.typeOfAction === '3') {
+                row.phoneNo = $(this).find('input[name="phone-no"]').val();
+            }
+            formData.suggestions.push(row);
+        });
+
+        // Posting the form data to /test
+        $.ajax({
+            url: '/text',
+            type: 'POST',
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                console.log('Success:', response);
+            },
+            error: function(err) {
+                console.error('Error:', err);
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
+
+   
+    

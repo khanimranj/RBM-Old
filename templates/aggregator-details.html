@@ -1,0 +1,377 @@
+{% extends "static-layout.html" %}
+{% block content %}
+
+<div class="row">
+    <div class="card mb-4">
+        <!-- Account -->
+        <div class="card-body">
+          <div class="d-flex align-items-start align-items-sm-center gap-4">
+            <img src="../static/img/profile.png" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar">
+            <div class="button-wrapper">
+              <h3>Congrats!</h3>
+              <p class="text-muted mb-0">You have successfully created your VinCam-RBM account.</p>
+            </div>
+          </div>
+        </div>
+        <hr class="my-0">
+        <div class="card-body">
+          <h5>Complete your aggregator details</h5>
+          <form id="aggregator-form" method="POST" onsubmit="return false">
+            <div class="row">
+              <div class="mb-3 col-md-4">
+                <label for="firstName" class="form-label">First Name</label>
+                <input class="form-control" type="text" name="firstName" id="firstName" value="John">
+                <p class="firstName-validate"></p>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="lastName" class="form-label">Last Name</label>
+                <input class="form-control" type="text" name="lastName" id="lastName" value="Doe">
+                <p class="lastName-validate"></p>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="contactNumber" class="form-label">Contact Number</label>
+                <div class="input-group">
+                    <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="../static/img/india.png">
+                    </button>
+                    <ul class="dropdown-menu">
+                      <li><a class="dropdown-item" href="javascript:void(0);">INDIA</a></li>
+                      <li><a class="dropdown-item" href="javascript:void(0);">AFGANISTAN</a></li>
+                    </ul>
+                    <input type="number" name="contactNumber" id="contactNumber" class="form-control" value="8978897889">
+                  </div>
+                  <p class="contactNumber-validate"></p>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="campaignTimezone" class="form-label required"> Campaign Timezone</label>
+                <select name="campaignTimezone" id="campaignTimezone" class="form-control" placeholder="Select Timezone">
+                    <option value="Asia/Kolkata" selected="">(GMT+5:30) Asia/Kolkata</option>   
+                </select>
+                <p class="campaignTimezone-validate"></p>
+              </div>
+            </div>
+            <h5 class="required">KYC Documents (Aggregator LOA Document)</h5>
+            <p>Please upload the following documents to complete aggregator KYC.Click here to download the document.</p>
+            <h5>Business Details</h5>
+            <div class="row">
+              <div class="mb-3 col-md-4">
+                <label for="transactionType" class="form-label">Transaction Type:</label>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="transactionType" id="inlineRadio1" value="option1">
+                  <label class="form-check-label" for="inlineRadio1">Domestic</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="transactionType" id="inlineRadio2" value="option2">
+                  <label class="form-check-label" for="inlineRadio2">International</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="transactionType" id="inlineRadio3" value="option3" >
+                  <label class="form-check-label" for="inlineRadio3">Both</label>
+                </div>
+                <p class="transactionType-validate"></p>
+              </div>
+            </div>
+            <h5>Business Details</h5>
+            <div class="row">
+              <div class="mb-3 col-md-8">
+                <div class="row">
+                  <div class="mb-3 col-md-4">
+                    <label for="domesticHostAddress" id="domesticHostAddress" class="form-label required">Domestic Host Address</label>
+                    <input class="form-control" type="text" name="domesticHostAddress" id="domesticHostAddress" value="">
+                    <p class="domesticHostAddress-validate"></p>
+                  </div>
+                  <div class="col-md-4" id="btn-add-ip-address-range" style="padding-top: 14px;">
+                    <br>
+                    <a href="javascript:void(0)">Add IP Address Range</a> 
+                  </div>
+                  <div  id="ip-address-range-end-container" class="col-md-8">
+                    <div class="row">
+                      <div class="col-md-1" style="text-align: center;">
+                        to
+                      </div>
+                      <div class="col-md-6">
+                        <input class="form-control" type="text" name="domesticHostAddressEnd" id="domesticHostAddressEnd" value="">
+                        <p class="domesticHostAddressEnd-validate"></p>
+                      </div>
+                      <div class="col-md-5"  style="padding-top: 5px;">
+                        <a href="javascript:void(0)" id="btn-add-ip-address-range-cancel">Cancel</a> 
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-md-4">
+                <label for="jobTitle" class="form-label required">Job Title</label>
+                <input class="form-control" type="text" name="jobTitle" id="jobTitle" value="Doe">
+                <p class="jobTitle-validate"></p>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="companyName" class="form-label required">Company Name</label>
+                <input type="text" name="companyName" id="companyName" class="form-control" maxlength="128" value="AIRKOMM MEDIA">
+                <p class="companyName-validate"></p>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="companyWebsite" class="form-label required">Company Website</label>
+                <input maxlength="2048" type="text" name="companyWebsite" class="form-control" value="https://airkomm.com">
+                <p class="companyWebsite-validate"></p>
+              </div>
+            </div>
+            <h5 class=" required">Address Details</h5>
+            <div class="row">
+              <div class="mb-3 col-md-4">
+                <label for="addressLine1" class="form-label">Address Line 1</label>
+                <input type="text" name="addressLine1" class="form-control"  value="3RD FLOOR, 8, F 23">
+                <p class="addressLine1-validate"></p>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="addressLine2" class="form-label">Address Line 2</label>
+                <input maxlength="2048" type="text" name="addressLine2" class="form-control" value="POCKET ROHINI SECTOR 3 NEW DELHI, New Delhi, North West Delhi, ">
+                <p class="addressLine2-validate"></p>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="country" class="form-label">Country</label>
+                <select disabled="" class="form-control" placeholder="Select Country" name="country">
+                    <option value="71">Abkhazia</option>
+                </select>
+                <p class="country-validate"></p>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="state" class="form-label">State/Province/Region</label>
+                <input type="text" name="state" class="form-control"  value="3RD FLOOR, 8, F 23">
+                <p class="state-validate"></p>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="zip" class="form-label">ZIP code</label>
+                <input type="text" name="zip" class="form-control"  value="110085">
+                <p class="zip-validate"></p>
+              </div>
+              <div class="mb-3 col-md-4">
+                <label for="city" class="form-label">City</label>
+                <input type="text" name="city" class="form-control"  value="Delhi">
+                <p class="city-validate"></p>
+              </div>
+            </div>
+            <h5>Upload Documents</h5>
+            <p>Please upload following documents to verify your business.</p>
+            <div class="row">
+              <div class="mb-3 col-md-8">
+                <label for="panCard" class="form-label required">Upload PAN Proof</label>
+                <input class="form-control" type="file" name="panCard" id="panCard" value="">
+                <p class="panCard-validate"></p>
+              </div>
+              <div class="mt-4 col-md-4">
+                <span class="margin-left-20 font-size-14 font-color-light-green">Document uploaded</span>
+                <a href="javascript:void(0);" class="p-2"><i class="bx bx-download"></i></a>
+                <a href="javascript:void(0);" class="p-2"><i class="bx bx-trash"></i></a>
+                <a href="javascript:void(0);" class="p-2"><i class="bx bx-window-open"></i></a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-md-8">
+                <label for="gstinProof" class="form-label required">Upload GSTIN Proof</label>
+                <input class="form-control" type="file" name="gstinProof" id="gstinProof" value="">
+                <p class="gstinProof-validate"></p>
+              </div>
+              <div class="mt-4 col-md-4">
+                <span class="margin-left-20 font-size-14 font-color-light-green">Document uploaded</span>
+                <a href="javascript:void(0);" class="p-2"><i class="bx bx-download"></i></a>
+                <a href="javascript:void(0);" class="p-2"><i class="bx bx-trash"></i></a>
+                <a href="javascript:void(0);" class="p-2"><i class="bx bx-window-open"></i></a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-md-8">
+                <label for="companyRegistrationProof" class="form-label required">Company Registration Proof</label>
+                <input class="form-control" type="file" name="companyRegistrationProof" id="companyRegistrationProof" value="">
+                <p class="companyRegistrationProof-validate"></p>
+              </div>
+              <div class="mt-4 col-md-4">
+                <span class="margin-left-20 font-size-14 font-color-light-green">Document uploaded</span>
+                <a href="javascript:void(0);" class="p-2"><i class="bx bx-download"></i></a>
+                <a href="javascript:void(0);" class="p-2"><i class="bx bx-trash"></i></a>
+                <a href="javascript:void(0);" class="p-2"><i class="bx bx-window-open"></i></a>
+              </div>
+            </div>
+            <div class="row">
+              <div class="mb-3 col-md-8">
+                <label for="companyBrandRegistrationProof" class="form-label requiredz">Company Brand Registration Proof</label>
+                <input class="form-control" type="file" name="companyBrandRegistrationProof" id="companyBrandRegistrationProof" value="">
+                <p class="companyBrandRegistrationProof-validate"></p>
+              </div>
+              <div class="mt-4 col-md-4">
+                <span class="margin-left-20 font-size-14 font-color-light-green">Document uploaded</span>
+                <a href="javascript:void(0);" class="p-2"><i class="bx bx-download"></i></a>
+                <a href="javascript:void(0);" class="p-2"><i class="bx bx-trash"></i></a>
+                <a href="javascript:void(0);" class="p-2"><i class="bx bx-window-open"></i></a>
+              </div>
+            </div>
+            <div class="mt-2">
+              <button type="submit" class="btn btn-primary me-2" >Next</button>
+              <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+            </div>
+          </form>
+        </div>
+        <!-- /Account -->
+      </div>
+</div>
+<style>
+  #ip-address-range-end-container{
+    display: none;
+    margin-top: 30px;
+  }
+</style>
+<script>
+$.validator.setDefaults({
+  submitHandler: function() {
+    alert("form-submitted!");
+    window.open('./aggregator-details-review');
+  }
+});
+$().ready(function() {
+		$("#btn-add-ip-address-range").click(function(){
+      $(this).hide();
+      $("#ip-address-range-end-container").show();
+    });
+    $("#btn-add-ip-address-range-cancel").click(function(){
+      $("#btn-add-ip-address-range").show();
+      $("#ip-address-range-end-container").hide();
+    });
+    $("#aggregator-form").validate({
+			rules: {
+				firstName: {
+					required: true,
+					minlength: 2
+				},
+				lastName: {
+					required: true,
+					minlength: 2
+				},
+				contactNumber: {
+					required: true,
+					minlength: 10
+				},
+				campaignTimezone: {
+					required: true
+				},
+				transactionType: {
+					required: true
+				},
+        domesticHostAddress: {
+					required: true
+				},
+        jobTitle: {
+					required: true
+				},
+        companyName: {
+					required: true
+				},
+        companyWebsite: {
+					required: true,
+					url: true
+				},
+        addressLine1: {
+					required: true
+				},
+        addressLine2: {
+					required: true
+				},
+        country: {
+					required: true
+				},
+        state: {
+					required: true
+				},
+        zip: {
+					required: true
+				},
+        city: {
+					required: true
+				},
+        panCard: {
+					required: true
+				},
+        gstinProof: {
+					required: true
+				},
+        companyRegistrationProof: {
+					required: true
+				},
+        companyBrandRegistrationProof: {
+					required: true
+        }
+			},
+			messages: {
+        firstName: {
+					required: "Please provide your First Name",
+					minlength: "Your First Name must consist of at least 2 characters"
+				},
+				lastName: {
+					required: "Please provide your Last Name",
+					minlength: "Your Last Name must consist of at least 2 characters"
+				},
+				contactNumber: {
+					required: "Please provide your Contact Number",
+					minlength: "Your Contact Number must consist of at least 10 characters"
+				},
+				campaignTimezone: {
+					required: "Please provide timezone of Campaign"
+				},
+				transactionType: {
+					required: "Please selct Transaction Type"
+				},
+        domesticHostAddress: {
+					required: "Please provide Domestic Host Address"
+				},
+        jobTitle: {
+					required: "Please provide your Job Title"
+				},
+        companyName: {
+					required: "Please provide your Company Name"
+				},
+        companyWebsite: {
+					required: "Please provide your Company Website",
+          url: "Please enter a valid url"
+				},
+        addressLine1: {
+					required: "Please provide Address Line 1"
+				},
+        addressLine2: {
+					required: "Please provide Address Line 2"
+				},
+        country: {
+					required: "Please select your Country"
+				},
+        state: {
+					required: "Please enter your State"
+				},
+        zip: {
+					required: "Please enter your ZIP"
+				},
+        city: {
+					required: "Please enter your City"
+				},
+        panCard: {
+					required: "Please select your PAN Card Proof"
+				},
+        gstinProof: {
+					required: "Please select your GSTIN Proof"
+				},
+        companyRegistrationProof: {
+					required: "Please select your Company Registration Proof"
+				},
+        companyBrandRegistrationProof: {
+					required: "Please select your Company Brand Registration Proof"
+        }
+			},
+      errorPlacement: function (error, element) {
+            var name = $(element).attr("name");
+            error.appendTo($("." + name + "-validate"));
+      },
+		});
+
+	});
+</script>
+{% endblock %}
+

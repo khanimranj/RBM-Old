@@ -1,0 +1,265 @@
+{% extends "brand-layout.html" %}
+{% block content %}
+
+<div class="row">
+  <div class="card mb-4">
+    <h5 class="card-header">Profile Details</h5>
+    <!-- Account -->
+    <div class="card-body">
+      <div class="d-flex align-items-start align-items-sm-center gap-4">
+        <img src="../static/img/profile.png" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar">
+        <div class="button-wrapper">
+          <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+            <span class="d-none d-sm-block">Upload new photo</span>
+            <i class="bx bx-upload d-block d-sm-none"></i>
+            <input type="file" name="profilePhone" id="upload" class="account-file-input" hidden="" accept="image/png, image/jpeg">
+          </label>
+          <button type="button" class="btn btn-outline-secondary account-image-reset mb-4">
+            <i class="bx bx-reset d-block d-sm-none"></i>
+            <span class="d-none d-sm-block">Reset</span>
+          </button>
+
+          <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+        </div>
+      </div>
+    </div>
+    <hr class="my-0">
+    <div class="card-body">
+      <form id="profile-form" method="POST" onsubmit="return false">
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="email" class="form-label required">Email ID<span class="text-light-gray" style="font-size: 12px;">(Your email id will be used as user id for login)</span></label>
+            <input type="text" name="email" class="form-control" value="rajat@airkomm.com">
+            <p class="email-validate"></p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="mb-3 col-md-6">
+            <label for="firstName" class="form-label">First Name</label>
+            <input class="form-control" type="text" name="firstName" id="firstName" value="John">
+            <p class="firstName-validate"></p>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input class="form-control" type="text" name="lastName" id="lastName" value="Doe">
+            <p class="lastName-validate"></p>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="contactNumber" class="form-label required">Contact Number</label>
+            <div class="input-group">
+                <button class="btn btn-outline-primary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img src="../static/img/india.png">
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="javascript:void(0);">INDIA</a></li>
+                  <li><a class="dropdown-item" href="javascript:void(0);">AFGANISTAN</a></li>
+                </ul>
+                <input type="number" name="contactNumber" class="form-control" value="8978897889">
+              </div>
+              <p class="contactNumber-validate"></p>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="jobTitle" class="form-label required">Job Title</label>
+            <input class="form-control" type="text" name="jobTitle" id="jobTitle" value="Doe">
+            <p class="jobTitle-validate"></p>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="companyName" class="form-label">Company Name</label>
+            <input type="text" name="companyName" class="form-control" maxlength="128" value="AIRKOMM MEDIA">
+            <p class="companyName-validate"></p>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="companyWebsite" class="form-label required">Company Website</label>
+            <input maxlength="2048" type="text" name="companyWebsite" class="form-control" value="https://airkomm.com">
+            <p class="companyWebsite-validate"></p>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="addressLine1" class="form-label required">Address Line 1</label>
+            <input type="text" name="addressLine1" class="form-control"  value="3RD FLOOR, 8, F 23">
+            <p class="addressLine1-validate"></p>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="addressLine2" class="form-label required">Address Line 2</label>
+            <input maxlength="2048" type="text" name="addressLine2" class="form-control" value="POCKET ROHINI SECTOR 3 NEW DELHI, New Delhi, North West Delhi, ">
+            <p class="addressLine2-validate"></p>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="country" class="form-label required">Country</label>
+            <select disabled="" class="form-control" placeholder="Select Country" name="country">
+                <option value="71">Abkhazia</option>
+            </select>
+            <p class="country-validate"></p>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="state" class="form-label required">State/Province/Region</label>
+            <input type="text" name="state" class="form-control"  value="3RD FLOOR, 8, F 23">
+            <p class="state-validate"></p>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="zip" class="form-label required">ZIP code</label>
+            <input type="text" name="zip" class="form-control"  value="110085">
+            <p class="zip-validate"></p>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="city" class="form-label required">City</label>
+            <input type="text" name="city" class="form-control"  value="Delhi">
+            <p class="city-validate"></p>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="campaignTimezone" class="form-label required">Campaign Timezone</label>
+            <select class="form-control" placeholder="Select Timezone" name="campaignTimezone">
+                <option value="Asia/Kolkata" selected="">(GMT+5:30) Asia/Kolkata</option>   
+            </select>
+            <p class="campaignTimezone-validate"></p>
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="accountTransactionType" class="form-label"> Account Transaction Type</label>
+            <input type="text" name="accountTransactionType" class="form-control"  value="Domestic">
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="accountCallbackURL" class="form-label"> Account Callback URL </label>
+            <input type="text" name="accountCallbackURL" class="form-control"  value="">
+          </div>
+          <div class="mb-3 col-md-6">
+            <label for="domesticHostAddress" class="form-label"> Domestic Host Address* </label>
+            <input type="text" name="domesticHostAddress" class="form-control" value="">
+            <p class="domesticHostAddress-validate"></p>
+          </div>
+        </div>
+        <div class="mt-2">
+          <button type="submit" class="btn btn-primary me-2">Save changes</button>
+          <button type="reset" class="btn btn-outline-secondary">Cancel</button>
+        </div>
+      </form>
+    </div>
+    <!-- /Account -->
+  </div>
+</div>
+<script>
+$.validator.setDefaults({
+  submitHandler: function() {
+    alert("form-submitted!");
+  }
+});
+$().ready(function() {
+    $("#profile-form").validate({
+			rules: {
+				email: {
+					required: true,
+					email: true
+				},
+				firstName: {
+					required: true,
+					minlength: 2
+				},
+				lastName: {
+					required: true,
+					minlength: 2
+				},
+				contactNumber: {
+					required: true,
+					minlength: 10
+				},
+				campaignTimezone: {
+					required: true
+				},
+				transactionType: {
+					required: true
+				},
+        domesticHostAddress: {
+					required: true
+				},
+        jobTitle: {
+					required: true
+				},
+        companyName: {
+					required: true
+				},
+        companyWebsite: {
+					required: true,
+					url: true
+				},
+        addressLine1: {
+					required: true
+				},
+        addressLine2: {
+					required: true
+				},
+        country: {
+					required: true
+				},
+        state: {
+					required: true
+				},
+        zip: {
+					required: true
+				},
+        city: {
+					required: true
+				}
+			},
+			messages: {
+        email: {
+					required: "Please provide your email",
+					email: "Your enter valid email address"
+				},
+        firstName: {
+					required: "Please provide your First Name",
+					minlength: "Your First Name must consist of at least 2 characters"
+				},
+				lastName: {
+					required: "Please provide your Last Name",
+					minlength: "Your Last Name must consist of at least 2 characters"
+				},
+				contactNumber: {
+					required: "Please provide your Contact Number",
+					minlength: "Your Contact Number must consist of at least 10 characters"
+				},
+				campaignTimezone: {
+					required: "Please provide timezone of Campaign"
+				},
+				transactionType: {
+					required: "Please selct Transaction Type"
+				},
+        domesticHostAddress: {
+					required: "Please provide Domestic Host Address"
+				},
+        jobTitle: {
+					required: "Please provide your Job Title"
+				},
+        companyName: {
+					required: "Please provide your Company Name"
+				},
+        companyWebsite: {
+					required: "Please provide your Company Website",
+          url: "Please enter a valid url"
+				},
+        addressLine1: {
+					required: "Please provide Address Line 1"
+				},
+        addressLine2: {
+					required: "Please provide Address Line 2"
+				},
+        country: {
+					required: "Please select your Country"
+				},
+        state: {
+					required: "Please enter your State"
+				},
+        zip: {
+					required: "Please enter your ZIP"
+				},
+        city: {
+					required: "Please enter your City"
+				}
+			},
+      errorPlacement: function (error, element) {
+            var name = $(element).attr("name");
+            error.appendTo($("." + name + "-validate"));
+      },
+		});
+
+	});
+</script>
+{% endblock %}
+
